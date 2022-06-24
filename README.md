@@ -1,6 +1,11 @@
 # yw2mso -- yWriter to MS Office converter
 
+This project is meant as a MS Office variant of the [yWriter to OpenOffice/LibreOffice standalone converter](https://peter88213.github.io/yW2OO/). 
+
+
 ## Important
+
+This is a work in progress. Contributions are welcome.
 
 The yw2mso script creates files with the extensions "DOCX" and "XLSX", but in reality they are still OpenDocument files internally.
 
