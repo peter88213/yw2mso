@@ -7,7 +7,7 @@ This project is meant as a MS Office variant of the [yWriter to OpenOffice/Libre
 
 This is a work in progress. Contributions are welcome.
 
-The yw2mso script creates files with the extensions "DOCX" and "XLSX", but in reality they are still OpenDocument files internally.
+The yw2mso script creates files with the extensions "DOCX" and "XLSX", but in reality there's still OpenDocument code inside.
 
 To fulfill the actual purpose, the following classes must be adapted first:
 

@@ -4,10 +4,10 @@ Copyright (c) 2022 Peter Triesberger
 For further information see https://github.com/peter88213/yw2mso
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from yw2msolib.docx.docx_file import OdtFile
+from yw2msolib.docx.docx_file import DocxFile
 
 
-class DocxSceneDesc(OdtFile):
+class DocxSceneDesc(DocxFile):
     """DOCX scene summaries file representation.
 
     Export a full synopsis with  scene descriptions.
@@ -15,7 +15,7 @@ class DocxSceneDesc(OdtFile):
     DESCRIPTION = 'Scene descriptions'
     SUFFIX = '_scenes'
 
-    _fileHeader = f'''{OdtFile._CONTENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
 <text:p text:style-name="Subtitle">$AuthorName</text:p>
 '''
 
@@ -53,4 +53,4 @@ class DocxSceneDesc(OdtFile):
     _chapterEndTemplate = '''</text:section>
 '''
 
-    _fileFooter = OdtFile._CONTENT_XML_FOOTER
+    _fileFooter = DocxFile._DOCUMENT_XML_FOOTER

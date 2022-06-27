@@ -4,10 +4,10 @@ Copyright (c) 2022 Peter Triesberger
 For further information see https://github.com/peter88213/yw2mso
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from yw2msolib.docx.docx_file import OdtFile
+from yw2msolib.docx.docx_file import DocxFile
 
 
-class DocxCharacters(OdtFile):
+class DocxCharacters(DocxFile):
     """DOCX character descriptions file representation.
 
     Export a character sheet with  descriptions.
@@ -15,7 +15,7 @@ class DocxCharacters(OdtFile):
     DESCRIPTION = 'Character descriptions'
     SUFFIX = '_characters'
 
-    _fileHeader = f'''{OdtFile._CONTENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
 <text:p text:style-name="Subtitle">$AuthorName</text:p>
 '''
 
@@ -30,7 +30,7 @@ class DocxCharacters(OdtFile):
 <text:p text:style-name="Text_20_body">$Notes</text:p>
 '''
 
-    _fileFooter = OdtFile._CONTENT_XML_FOOTER
+    _fileFooter = DocxFile._DOCUMENT_XML_FOOTER
 
     def _get_characterMapping(self, crId):
         """Return a mapping dictionary for a character section.
@@ -41,7 +41,7 @@ class DocxCharacters(OdtFile):
         Special formatting of alternate and full name. 
         Extends the superclass method.
         """
-        characterMapping = OdtFile._get_characterMapping(self, crId)
+        characterMapping = DocxFile._get_characterMapping(self, crId)
         if self.characters[crId].aka:
             characterMapping['AKA'] = f' ("{self.characters[crId].aka}")'
         if self.characters[crId].fullName:

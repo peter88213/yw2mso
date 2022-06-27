@@ -13,7 +13,7 @@ class XlsxCharList(XlsxFile):
     DESCRIPTION = 'Character list'
     SUFFIX = '_charlist'
     
-    _fileHeader = f'''{XlsxFile._CONTENT_XML_HEADER}{DESCRIPTION}" table:style-name="ta1" table:print="false">
+    _fileHeader = f'''{XlsxFile._DOCUMENT_XML_HEADER}{DESCRIPTION}" table:style-name="ta1" table:print="false">
     <table:table-column table:style-name="co1" table:default-cell-style-name="Default"/>
     <table:table-column table:style-name="co2" table:default-cell-style-name="Default"/>
     <table:table-column table:style-name="co3" table:default-cell-style-name="Default"/>
@@ -94,4 +94,4 @@ class XlsxCharList(XlsxFile):
 
 '''
 
-    _fileFooter = XlsxFile._CONTENT_XML_FOOTER
+    _fileFooter = XlsxFile._DOCUMENT_XML_FOOTER

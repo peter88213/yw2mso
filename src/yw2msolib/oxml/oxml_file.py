@@ -8,11 +8,12 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import os
 import zipfile
-import locale
 import tempfile
 from shutil import rmtree
+import locale
 from datetime import datetime
 from string import Template
+
 from pywriter.pywriter_globals import ERROR
 from pywriter.file.file_export import FileExport
 
@@ -24,11 +25,17 @@ class OxmlFile(FileExport):
         write() -- write instance variables to the export file.
     """
     _OXML_COMPONENTS = []
-    _MIMETYPE = ''
-    _SETTINGS_XML = ''
-    _MANIFEST_XML = ''
-    _STYLES_XML = ''
-    _META_XML = ''
+    _CONTENT_TYPES_XML = ''
+    _CORE_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dcterms:created xsi:type="dcterms:W3CDTF">$Datetime</dcterms:created><dc:creator>$Author</dc:creator><dc:description>$Summary</dc:description><cp:keywords>  </cp:keywords><dc:language>$language-$Country</dc:language><cp:lastModifiedBy>Peter Triesberger</cp:lastModifiedBy><dcterms:modified xsi:type="dcterms:W3CDTF">2022-06-26T21:49:47Z</dcterms:modified><cp:revision>1</cp:revision><dc:subject></dc:subject><dc:title>$Title</dc:title></cp:coreProperties>
+'''
+    _CUSTOM_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"></Properties>
+'''
+    _RELS = '''<?xml version="1.0" encoding="UTF-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties" Target="docProps/custom.xml"/><Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+</Relationships>  
+'''
 
     def __init__(self, filePath, **kwargs):
         """Create a temporary directory for zipfile generation.
@@ -67,59 +74,51 @@ class OxmlFile(FileExport):
         try:
             self._tear_down()
             os.mkdir(self._tempDir)
-            os.mkdir(f'{self._tempDir}/META-INF')
+            os.mkdir(f'{self._tempDir}/_rels')
+            os.mkdir(f'{self._tempDir}/docProps')
         except:
             return f'{ERROR}Cannot create "{os.path.normpath(self._tempDir)}".'
 
-        #--- Generate mimetype.
+        #--- Generate [Content_Types].xml.
         try:
-            with open(f'{self._tempDir}/mimetype', 'w', encoding='utf-8') as f:
-                f.write(self._MIMETYPE)
+            with open(f'{self._tempDir}/[Content_Types].xml', 'w', encoding='utf-8') as f:
+                f.write(self._CONTENT_TYPES_XML)
         except:
-            return f'{ERROR}Cannot write "mimetype"'
+            return f'{ERROR}Cannot write "[Content_Types].xml"'
 
-        #--- Generate settings.xml.
-        try:
-            with open(f'{self._tempDir}/settings.xml', 'w', encoding='utf-8') as f:
-                f.write(self._SETTINGS_XML)
-        except:
-            return f'{ERROR}Cannot write "settings.xml"'
+        #--- Generate docProps/core.xml.
 
-        #--- Generate META-INF\manifest.xml.
-        try:
-            with open(f'{self._tempDir}/META-INF/manifest.xml', 'w', encoding='utf-8') as f:
-                f.write(self._MANIFEST_XML)
-        except:
-            return f'{ERROR}Cannot write "manifest.xml"'
-
-        #--- Generate styles.xml with system language set as document language.
+        #  Set system language set as document language.
         lng, ctr = locale.getdefaultlocale()[0].split('_')
-        localeMapping = dict(
-            Language=lng,
-            Country=ctr,
-        )
-        template = Template(self._STYLES_XML)
-        text = template.safe_substitute(localeMapping)
-        try:
-            with open(f'{self._tempDir}/styles.xml', 'w', encoding='utf-8') as f:
-                f.write(text)
-        except:
-            return f'{ERROR}Cannot write "styles.xml"'
-
-        #--- Generate meta.xml with actual document metadata.
-        metaMapping = dict(
+        coreMapping = dict(
             Author=self.authorName,
             Title=self.title,
             Summary=f'<![CDATA[{self.desc}]]>',
             Datetime=datetime.today().replace(microsecond=0).isoformat(),
-        )
-        template = Template(self._META_XML)
-        text = template.safe_substitute(metaMapping)
+            Language=lng,
+            Country=ctr,
+       )
+        template = Template(self._CORE_XML)
+        text = template.safe_substitute(coreMapping)
         try:
-            with open(f'{self._tempDir}/meta.xml', 'w', encoding='utf-8') as f:
+            with open(f'{self._tempDir}/docProps/core.xml', 'w', encoding='utf-8') as f:
                 f.write(text)
         except:
-            return f'{ERROR}Cannot write "meta.xml".'
+            return f'{ERROR}Cannot write "core.xml".'
+
+        #--- Generate docProps/custom.xml.
+        try:
+            with open(f'{self._tempDir}/docProps/custom.xml', 'w', encoding='utf-8') as f:
+                f.write(self._CUSTOM_XML)
+        except:
+            return f'{ERROR}Cannot write "custom.xml"'
+
+        #--- Generate _rels\.rels.
+        try:
+            with open(f'{self._tempDir}/_rels/.rels', 'w', encoding='utf-8') as f:
+                f.write(self._RELS)
+        except:
+            return f'{ERROR}Cannot write ".rels"'
 
         return 'OXML structure generated.'
 
@@ -137,14 +136,6 @@ class OxmlFile(FileExport):
         if message.startswith(ERROR):
             return message
 
-        #--- Add "content.xml" to the temporary directory.
-        self._originalPath = self._filePath
-        self._filePath = f'{self._tempDir}/content.xml'
-        message = super().write()
-        self._filePath = self._originalPath
-        if message.startswith(ERROR):
-            return message
-
         #--- Pack the contents of the temporary directory into the OXML file.
         workdir = os.getcwd()
         backedUp = False
@@ -156,14 +147,14 @@ class OxmlFile(FileExport):
                 return f'{ERROR}Cannot overwrite "{os.path.normpath(self.filePath)}".'
 
         try:
-            with zipfile.ZipFile(self.filePath, 'w') as odfTarget:
+            with zipfile.ZipFile(self.filePath, 'w') as oxmlTarget:
                 os.chdir(self._tempDir)
                 for file in self._OXML_COMPONENTS:
-                    odfTarget.write(file, compress_type=zipfile.ZIP_DEFLATED)
+                    oxmlTarget.write(file, compress_type=zipfile.ZIP_DEFLATED)
         except:
+            os.chdir(workdir)
             if backedUp:
                 os.replace(f'{self.filePath}.bak', self.filePath)
-            os.chdir(workdir)
             return f'{ERROR}Cannot generate "{os.path.normpath(self.filePath)}".'
 
         #--- Remove temporary data.

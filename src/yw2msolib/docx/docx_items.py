@@ -4,10 +4,10 @@ Copyright (c) 2022 Peter Triesberger
 For further information see https://github.com/peter88213/yw2mso
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from yw2msolib.docx.docx_file import OdtFile
+from yw2msolib.docx.docx_file import DocxFile
 
 
-class DocxItems(OdtFile):
+class DocxItems(DocxFile):
     """DOCX item descriptions file representation.
 
     Export a item sheet with  descriptions.
@@ -15,7 +15,7 @@ class DocxItems(OdtFile):
     DESCRIPTION = 'Item descriptions'
     SUFFIX = '_items'
 
-    _fileHeader = f'''{OdtFile._CONTENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
 <text:p text:style-name="Subtitle">$AuthorName</text:p>
 '''
 
@@ -23,7 +23,7 @@ class DocxItems(OdtFile):
 <text:p text:style-name="Text_20_body">$Desc</text:p>
 '''
 
-    _fileFooter = OdtFile._CONTENT_XML_FOOTER
+    _fileFooter = DocxFile._DOCUMENT_XML_FOOTER
 
     def _get_itemMapping(self, itId):
         """Return a mapping dictionary for an item section.

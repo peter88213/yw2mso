@@ -4,15 +4,15 @@ Copyright (c) 2022 Peter Triesberger
 For further information see https://github.com/peter88213/yw2mso
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from yw2msolib.docx.docx_file import OdtFile
+from yw2msolib.docx.docx_file import DocxFile
 
 
-class DocxExport(OdtFile):
+class DocxExport(DocxFile):
     """DOCX novel file representation.
 
     Export a non-reimportable manuscript with chapters and scenes.
     """
-    _fileHeader = f'''{OdtFile._CONTENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
 <text:p text:style-name="Subtitle">$AuthorName</text:p>
 '''
 
@@ -35,7 +35,7 @@ class DocxExport(OdtFile):
 '''
 
     _sceneDivider = '<text:p text:style-name="Heading_20_4">* * *</text:p>\n'
-    _fileFooter = OdtFile._CONTENT_XML_FOOTER
+    _fileFooter = DocxFile._DOCUMENT_XML_FOOTER
 
     def _get_chapterMapping(self, chId, chapterNumber):
         """Return a mapping dictionary for a chapter section.

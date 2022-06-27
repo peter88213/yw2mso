@@ -7,373 +7,58 @@ For further information see https://github.com/peter88213/yw2mso
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import re
+import os
+from string import Template
 
 from pywriter.pywriter_globals import ERROR
+from pywriter.file.file_export import FileExport
 from yw2msolib.oxml.oxml_file import OxmlFile
 
 
-class OdtFile(OxmlFile):
+class DocxFile(OxmlFile):
     """Generic OpenDocument text document representation."""
 
     EXTENSION = '.docx'
     # overwrites Novel.EXTENSION
 
-    _OXML_COMPONENTS = ['manifest.rdf', 'META-INF', 'content.xml', 'meta.xml', 'mimetype',
-                      'settings.xml', 'styles.xml', 'META-INF/manifest.xml']
+    _OXML_COMPONENTS = ['[Content_Types].xml', '_rels/.rels', 'docProps/app.xml', 'docProps/core.xml', 'docProps/custom.xml',
+                      'word/_rels/document.xml.rels', 'word/styles.xml', 'word/document.xml', 'word/fontTable.xml', 'word/footer1.xml', 'word/settings.xml', ]
 
-    _CONTENT_XML_HEADER = '''<?xml version="1.0" encoding="UTF-8"?>
-
-<office:document-content xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" office:version="1.2">
- <office:scripts/>
- <office:font-face-decls>
-  <style:font-face style:name="StarSymbol" svg:font-family="StarSymbol" style:font-charset="x-symbol"/>
-  <style:font-face style:name="Consolas" svg:font-family="Consolas" style:font-adornments="Standard" style:font-family-generic="modern" style:font-pitch="fixed"/>
-  <style:font-face style:name="Courier New" svg:font-family="&apos;Courier New&apos;" style:font-adornments="Standard" style:font-family-generic="modern" style:font-pitch="fixed"/>
- </office:font-face-decls>
- <office:automatic-styles/>
- <office:body>
-  <office:text text:use-soft-page-breaks="true">
-
+    _CONTENT_TYPES_XML = '''<?xml version="1.0" encoding="UTF-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="xml" ContentType="application/xml"/><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="png" ContentType="image/png"/><Default Extension="jpeg" ContentType="image/jpeg"/><Override PartName="/_rels/.rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/><Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/><Override PartName="/docProps/custom.xml" ContentType="application/vnd.openxmlformats-officedocument.custom-properties+xml"/><Override PartName="/word/_rels/document.xml.rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/fontTable.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"/><Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/>
+</Types>
+'''
+    _APP_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"><Template></Template><TotalTime>0</TotalTime><Application>LibreOffice/7.2.5.2$Windows_X86_64 LibreOffice_project/499f9727c189e6ef3471021d6132d4c694f357e5</Application><AppVersion>15.0000</AppVersion><Pages>14</Pages><Words>1401</Words><Characters>6390</Characters><CharactersWithSpaces>7661</CharactersWithSpaces><Paragraphs>130</Paragraphs></Properties>
+'''
+    _DOCUMENT_XML_RELS = '''<?xml version="1.0" encoding="UTF-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable" Target="fontTable.xml"/><Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/>
+</Relationships>
+'''
+    _STYLES_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="w14"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Segoe UI" w:hAnsi="Segoe UI" w:eastAsia="Segoe UI" w:cs="Segoe UI"/><w:color w:val="000000"/><w:szCs w:val="2"/><w:lang w:val="de-DE" w:eastAsia="zxx" w:bidi="zxx"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:suppressAutoHyphens w:val="true"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/><w:pPr><w:widowControl w:val="false"/><w:suppressAutoHyphens w:val="true"/><w:overflowPunct w:val="false"/><w:bidi w:val="0"/><w:spacing w:lineRule="exact" w:line="414" w:before="0" w:after="0"/><w:jc w:val="left"/></w:pPr><w:rPr><w:rFonts w:ascii="Courier New" w:hAnsi="Courier New" w:eastAsia="Segoe UI" w:cs="Segoe UI"/><w:b w:val="false"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="24"/><w:szCs w:val="2"/><w:lang w:val="de-DE" w:eastAsia="zxx" w:bidi="zxx"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="Heading 1"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="828" w:after="414"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:caps/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="Heading 2"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="828" w:after="414"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="Heading 3"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="414" w:after="414"/><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:i/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading4"><w:name w:val="Heading 4"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="414" w:after="414"/></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading5"><w:name w:val="Heading 5"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading6"><w:name w:val="Heading 6"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading7"><w:name w:val="Heading 7"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading8"><w:name w:val="Heading 8"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading9"><w:name w:val="Heading 9"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="character" w:styleId="Emphasize"><w:name w:val="Emphasize"/><w:qFormat/><w:rPr><w:i/><w:shd w:fill="auto" w:val="clear"/></w:rPr></w:style><w:style w:type="character" w:styleId="Strongemphasize"><w:name w:val="Stark betont"/><w:qFormat/><w:rPr><w:caps/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading"><w:name w:val="Überschrift"/><w:basedOn w:val="Normal"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:keepNext w:val="true"/><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs><w:spacing w:lineRule="exact" w:line="414"/><w:jc w:val="center"/></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="BodyText"><w:name w:val="Body Text"/><w:basedOn w:val="Normal"/><w:next w:val="BodyTextIndent"/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Aufzhlung"><w:name w:val="List"/><w:basedOn w:val="BodyText"/><w:pPr></w:pPr><w:rPr><w:rFonts w:ascii="Segoe UI" w:hAnsi="Segoe UI" w:cs="Arial Unicode MS"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Beschriftung"><w:name w:val="Caption"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:suppressLineNumbers/><w:spacing w:before="120" w:after="120"/></w:pPr><w:rPr><w:rFonts w:ascii="Segoe UI" w:hAnsi="Segoe UI" w:cs="Arial Unicode MS"/><w:i/><w:iCs/><w:sz w:val="20"/><w:szCs w:val="24"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Verzeichnis"><w:name w:val="Verzeichnis"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:suppressLineNumbers/></w:pPr><w:rPr><w:rFonts w:ascii="Segoe UI" w:hAnsi="Segoe UI" w:cs="Arial Unicode MS"/><w:lang w:val="zxx" w:eastAsia="zxx" w:bidi="zxx"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="BodyTextIndent"><w:name w:val="Body Text Indent"/><w:basedOn w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="0" w:right="0" w:firstLine="283"/></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="HngenderEinzug"><w:name w:val="Hängender Einzug"/><w:basedOn w:val="BodyText"/><w:qFormat/><w:pPr><w:tabs><w:tab w:val="left" w:pos="567" w:leader="none"/></w:tabs><w:spacing w:before="0" w:after="0"/><w:ind w:left="567" w:right="0" w:hanging="283"/></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="EinzugTextkrper"><w:name w:val="Body Text Indent"/><w:basedOn w:val="BodyText"/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="283" w:right="0" w:hanging="0"/></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading10"><w:name w:val="Überschrift 10"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:outlineLvl w:val="8"/></w:pPr><w:rPr><w:b/><w:sz w:val="18"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="KopfundFuzeile"><w:name w:val="Kopf- und Fußzeile"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:suppressLineNumbers/><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9638" w:leader="none"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Kopfzeile"><w:name w:val="Header"/><w:basedOn w:val="Normal"/><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="2" w:space="1" w:color="000000"/></w:pBdr><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs><w:jc w:val="right"/></w:pPr><w:rPr><w:i/><w:caps w:val="false"/><w:smallCaps w:val="false"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Kopfzeilelinks"><w:name w:val="Kopfzeile links"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Kopfzeilerechts"><w:name w:val="Kopfzeile rechts"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Fuzeile"><w:name w:val="Footer"/><w:basedOn w:val="Normal"/><w:pPr><w:suppressLineNumbers/><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs><w:jc w:val="center"/></w:pPr><w:rPr><w:sz w:val="22"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Fuzeilelinks"><w:name w:val="Fußzeile links"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Fuzeilerechts"><w:name w:val="Fußzeile rechts"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Titel"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Untertitel"/><w:qFormat/><w:pPr><w:suppressLineNumbers/><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs><w:spacing w:lineRule="auto" w:line="480" w:before="0" w:after="0"/><w:ind w:left="0" w:right="0" w:hanging="0"/><w:jc w:val="center"/></w:pPr><w:rPr><w:b w:val="false"/><w:caps/><w:kern w:val="0"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Untertitel"><w:name w:val="Subtitle"/><w:basedOn w:val="Titel"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0"/></w:pPr><w:rPr><w:b w:val="false"/><w:i/><w:caps w:val="false"/><w:smallCaps w:val="false"/><w:spacing w:val="0"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Zitat"><w:name w:val="Zitat"/><w:basedOn w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="567" w:right="0" w:hanging="0"/></w:pPr><w:rPr><w:rFonts w:ascii="Consolas" w:hAnsi="Consolas"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="YWritermark"><w:name w:val="yWriter mark"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr></w:pPr><w:rPr><w:color w:val="008000"/><w:sz w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="YWritermarkunused"><w:name w:val="yWriter mark unused"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr></w:pPr><w:rPr><w:color w:val="808080"/><w:sz w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="YWritermarknotes"><w:name w:val="yWriter mark notes"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr></w:pPr><w:rPr><w:color w:val="0000FF"/><w:sz w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="YWritermarktodo"><w:name w:val="yWriter mark todo"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr></w:pPr><w:rPr><w:color w:val="B22222"/><w:sz w:val="20"/></w:rPr></w:style></w:styles>
+'''
+    _DOCUMENT_XML_HEADER = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" mc:Ignorable="w14 wp14"><w:body>
 '''
 
-    _CONTENT_XML_FOOTER = '''  </office:text>
- </office:body>
-</office:document-content>
+    _DOCUMENT_XML_FOOTER = '''</w:body></w:document>
 '''
 
-    _META_XML = '''<?xml version="1.0" encoding="utf-8"?>
-<office:document-meta xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:grddl="http://www.w3.org/2003/g/data-view#" office:version="1.2">
-  <office:meta>
-    <meta:generator>PyWriter</meta:generator>
-    <dc:title>$Title</dc:title>
-    <dc:description>$Summary</dc:description>
-    <dc:subject></dc:subject>
-    <meta:keyword></meta:keyword>
-    <meta:initial-creator>$Author</meta:initial-creator>
-    <dc:creator></dc:creator>
-    <meta:creation-date>${Datetime}Z</meta:creation-date>
-    <dc:date></dc:date>
-  </office:meta>
-</office:document-meta>
+    _FONT_TABLE_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:fonts xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:font w:name="Times New Roman"><w:charset w:val="00"/><w:family w:val="roman"/><w:pitch w:val="variable"/></w:font><w:font w:name="Symbol"><w:charset w:val="02"/><w:family w:val="roman"/><w:pitch w:val="variable"/></w:font><w:font w:name="Arial"><w:charset w:val="00"/><w:family w:val="swiss"/><w:pitch w:val="variable"/></w:font><w:font w:name="Segoe UI"><w:charset w:val="01"/><w:family w:val="auto"/><w:pitch w:val="default"/></w:font><w:font w:name="Courier New"><w:charset w:val="01"/><w:family w:val="auto"/><w:pitch w:val="default"/></w:font><w:font w:name="Consolas"><w:charset w:val="01"/><w:family w:val="auto"/><w:pitch w:val="default"/></w:font></w:fonts>
 '''
-    _MANIFEST_XML = '''<?xml version="1.0" encoding="utf-8"?>
-<manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0" manifest:version="1.2">
-  <manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.text" manifest:full-path="/" />
-  <manifest:file-entry manifest:media-type="application/xml" manifest:full-path="content.xml" manifest:version="1.2" />
-  <manifest:file-entry manifest:media-type="application/rdf+xml" manifest:full-path="manifest.rdf" manifest:version="1.2" />
-  <manifest:file-entry manifest:media-type="application/xml" manifest:full-path="styles.xml" manifest:version="1.2" />
-  <manifest:file-entry manifest:media-type="application/xml" manifest:full-path="meta.xml" manifest:version="1.2" />
-  <manifest:file-entry manifest:media-type="application/xml" manifest:full-path="settings.xml" manifest:version="1.2" />
-</manifest:manifest>    
+    _FOOTER1_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:ftr xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" mc:Ignorable="w14 wp14"><w:p><w:pPr><w:pStyle w:val="Fuzeile"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType="begin"></w:fldChar></w:r><w:r><w:rPr></w:rPr><w:instrText> PAGE </w:instrText></w:r><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr></w:rPr><w:t>14</w:t></w:r><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType="end"/></w:r></w:p></w:ftr>
 '''
-    _MANIFEST_RDF = '''<?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="styles.xml">
-    <rdf:type rdf:resource="http://docs.oasis-open.org/ns/office/1.2/meta/odf#StylesFile"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="">
-    <ns0:hasPart xmlns:ns0="http://docs.oasis-open.org/ns/office/1.2/meta/pkg#" rdf:resource="styles.xml"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="content.xml">
-    <rdf:type rdf:resource="http://docs.oasis-open.org/ns/office/1.2/meta/odf#ContentFile"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="">
-    <ns0:hasPart xmlns:ns0="http://docs.oasis-open.org/ns/office/1.2/meta/pkg#" rdf:resource="content.xml"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="">
-    <rdf:type rdf:resource="http://docs.oasis-open.org/ns/office/1.2/meta/pkg#Document"/>
-  </rdf:Description>
-</rdf:RDF>
-'''
-    _SETTINGS_XML = '''<?xml version="1.0" encoding="UTF-8"?>
 
-<office:document-settings xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooo="http://openoffice.org/2004/office" office:version="1.2">
- <office:settings>
-  <config:config-item-set config:name="ooo:view-settings">
-   <config:config-item config:name="ViewAreaTop" config:type="int">0</config:config-item>
-   <config:config-item config:name="ViewAreaLeft" config:type="int">0</config:config-item>
-   <config:config-item config:name="ViewAreaWidth" config:type="int">30508</config:config-item>
-   <config:config-item config:name="ViewAreaHeight" config:type="int">27783</config:config-item>
-   <config:config-item config:name="ShowRedlineChanges" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="InBrowseMode" config:type="boolean">false</config:config-item>
-   <config:config-item-map-indexed config:name="Views">
-    <config:config-item-map-entry>
-     <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
-     <config:config-item config:name="ViewLeft" config:type="int">8079</config:config-item>
-     <config:config-item config:name="ViewTop" config:type="int">3501</config:config-item>
-     <config:config-item config:name="VisibleLeft" config:type="int">0</config:config-item>
-     <config:config-item config:name="VisibleTop" config:type="int">0</config:config-item>
-     <config:config-item config:name="VisibleRight" config:type="int">30506</config:config-item>
-     <config:config-item config:name="VisibleBottom" config:type="int">27781</config:config-item>
-     <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
-     <config:config-item config:name="ViewLayoutColumns" config:type="short">0</config:config-item>
-     <config:config-item config:name="ViewLayoutBookMode" config:type="boolean">false</config:config-item>
-     <config:config-item config:name="ZoomFactor" config:type="short">100</config:config-item>
-     <config:config-item config:name="IsSelectedFrame" config:type="boolean">false</config:config-item>
-    </config:config-item-map-entry>
-   </config:config-item-map-indexed>
-  </config:config-item-set>
-  <config:config-item-set config:name="ooo:configuration-settings">
-   <config:config-item config:name="AddParaSpacingToTableCells" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="PrintPaperFromSetup" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="IsKernAsianPunctuation" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintReversed" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="LinkUpdateMode" config:type="short">1</config:config-item>
-   <config:config-item config:name="DoNotCaptureDrawObjsOnPage" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="SaveVersionOnClose" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintEmptyPages" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="PrintSingleJobs" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="AllowPrintJobCancel" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="AddFrameOffsets" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintLeftPages" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="PrintTables" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="ProtectForm" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="ChartAutoUpdate" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="PrintControls" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="PrinterSetup" config:type="base64Binary">8gT+/0hQIExhc2VySmV0IFAyMDE0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASFAgTGFzZXJKZXQgUDIwMTQAAAAAAAAAAAAAAAAAAAAWAAEAGAQAAAAAAAAEAAhSAAAEdAAAM1ROVwIACABIAFAAIABMAGEAcwBlAHIASgBlAHQAIABQADIAMAAxADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQDANwANAMPnwAAAQAJAJoLNAgAAAEABwBYAgEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU0RETQAGAAAABgAASFAgTGFzZXJKZXQgUDIwMTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAAAAAABAAAAAQAAABoEAAAAAAAAAAAAAAAAAAAPAAAALQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAgICAAP8AAAD//wAAAP8AAAD//wAAAP8A/wD/AAAAAAAAAAAAAAAAAAAAAAAoAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAwAA3gMAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABrjvBgNAMAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAQ09NUEFUX0RVUExFWF9NT0RFCgBEVVBMRVhfT0ZG</config:config-item>
-   <config:config-item config:name="CurrentDatabaseDataSource" config:type="string"/>
-   <config:config-item config:name="LoadReadonly" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="CurrentDatabaseCommand" config:type="string"/>
-   <config:config-item config:name="ConsiderTextWrapOnObjPos" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="ApplyUserData" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="AddParaTableSpacing" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="FieldAutoUpdate" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="IgnoreFirstLineIndentInNumbering" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="TabsRelativeToIndent" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="IgnoreTabsAndBlanksForLineCalculation" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintAnnotationMode" config:type="short">0</config:config-item>
-   <config:config-item config:name="AddParaTableSpacingAtStart" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="UseOldPrinterMetrics" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="TableRowKeep" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrinterName" config:type="string">HP LaserJet P2014</config:config-item>
-   <config:config-item config:name="PrintFaxName" config:type="string"/>
-   <config:config-item config:name="UnxForceZeroExtLeading" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintTextPlaceholder" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="DoNotJustifyLinesWithManualBreak" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintRightPages" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="CharacterCompressionType" config:type="short">0</config:config-item>
-   <config:config-item config:name="UseFormerTextWrapping" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="IsLabelDocument" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="AlignTabStopPosition" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="PrintHiddenText" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="DoNotResetParaAttrsForNumFont" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintPageBackground" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="CurrentDatabaseCommandType" config:type="int">0</config:config-item>
-   <config:config-item config:name="OutlineLevelYieldsNumbering" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintProspect" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintGraphics" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="SaveGlobalDocumentLinks" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintProspectRTL" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="UseFormerLineSpacing" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="AddExternalLeading" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="UseFormerObjectPositioning" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="RedlineProtectionKey" config:type="base64Binary"/>
-   <config:config-item config:name="MathBaselineAlignment" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="ClipAsCharacterAnchoredWriterFlyFrames" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="UseOldNumbering" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintDrawings" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="PrinterIndependentLayout" config:type="string">disabled</config:config-item>
-   <config:config-item config:name="TabAtLeftIndentForParagraphsInList" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="PrintBlackFonts" config:type="boolean">false</config:config-item>
-   <config:config-item config:name="UpdateFromTemplate" config:type="boolean">true</config:config-item>
-  </config:config-item-set>
- </office:settings>
-</office:document-settings>
-'''
-    _STYLES_XML = '''<?xml version="1.0" encoding="UTF-8"?>
-
-<office:document-styles xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0">
- <office:font-face-decls>
-  <style:font-face style:name="StarSymbol" svg:font-family="StarSymbol" style:font-charset="x-symbol"/>
-  <style:font-face style:name="Segoe UI" svg:font-family="&apos;Segoe UI&apos;"/>
-  <style:font-face style:name="Courier New" svg:font-family="&apos;Courier New&apos;" style:font-adornments="Standard" style:font-family-generic="modern" style:font-pitch="fixed"/>
-  <style:font-face style:name="Consolas" svg:font-family="Consolas" style:font-adornments="Standard" style:font-family-generic="modern" style:font-pitch="fixed"/>
-  </office:font-face-decls>
- <office:styles>
-  <style:default-style style:family="graphic">
-   <style:graphic-properties svg:stroke-color="#3465a4" draw:fill-color="#729fcf" fo:wrap-option="no-wrap" draw:shadow-offset-x="0.3cm" draw:shadow-offset-y="0.3cm" draw:start-line-spacing-horizontal="0.283cm" draw:start-line-spacing-vertical="0.283cm" draw:end-line-spacing-horizontal="0.283cm" draw:end-line-spacing-vertical="0.283cm" style:flow-with-text="true"/>
-   <style:paragraph-properties style:text-autospace="ideograph-alpha" style:line-break="strict" style:writing-mode="lr-tb" style:font-independent-line-spacing="false">
-    <style:tab-stops/>
-   </style:paragraph-properties>
-   <style:text-properties fo:color="#000000" fo:font-size="10pt" fo:language="$Language" fo:country="$Country" style:font-size-asian="10pt" style:language-asian="zxx" style:country-asian="none" style:font-size-complex="1pt" style:language-complex="zxx" style:country-complex="none"/>
-  </style:default-style>
-  <style:default-style style:family="paragraph">
-   <style:paragraph-properties fo:hyphenation-ladder-count="no-limit" style:text-autospace="ideograph-alpha" style:punctuation-wrap="hanging" style:line-break="strict" style:tab-stop-distance="1.251cm" style:writing-mode="lr-tb"/>
-   <style:text-properties fo:color="#000000" style:font-name="Segoe UI" fo:font-size="10pt" fo:language="$Language" fo:country="$Country" style:font-name-asian="Segoe UI" style:font-size-asian="10pt" style:language-asian="zxx" style:country-asian="none" style:font-name-complex="Segoe UI" style:font-size-complex="1pt" style:language-complex="zxx" style:country-complex="none" fo:hyphenate="false" fo:hyphenation-remain-char-count="2" fo:hyphenation-push-char-count="2"/>
-  </style:default-style>
-  <style:style style:name="Standard" style:family="paragraph" style:class="text" style:master-page-name="">
-   <style:paragraph-properties fo:line-height="0.73cm" style:page-number="auto"/>
-   <style:text-properties style:font-name="Courier New" fo:font-size="12pt" fo:font-weight="normal"/>
-  </style:style>
-  <style:style style:name="Text_20_body" style:display-name="Text body" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="First_20_line_20_indent" style:class="text" style:master-page-name="">
-   <style:paragraph-properties style:page-number="auto">
-    <style:tab-stops/>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="First_20_line_20_indent" style:display-name="First line indent" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="text" style:master-page-name="">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin="100%" fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:text-indent="0.499cm" style:auto-text-indent="false" style:page-number="auto"/>
-  </style:style>
-  <style:style style:name="Hanging_20_indent" style:display-name="Hanging indent" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="text">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin="100%" fo:margin-left="1cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:text-indent="-0.499cm" style:auto-text-indent="false">
-    <style:tab-stops>
-     <style:tab-stop style:position="0cm"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="Text_20_body_20_indent" style:display-name="Text body indent" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="text">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin="100%" fo:margin-left="0.499cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:text-indent="0cm" style:auto-text-indent="false"/>
-  </style:style>
-  <style:style style:name="Heading" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Text_20_body" style:class="text" style:master-page-name="">
-   <style:paragraph-properties fo:line-height="0.73cm" fo:text-align="center" style:justify-single-word="false" style:page-number="auto" fo:keep-with-next="always">
-    <style:tab-stops/>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="Heading_20_1" style:display-name="Heading 1" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="1" style:list-style-name="" style:class="text" style:master-page-name="">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin-top="1.461cm" fo:margin-bottom="0.73cm" style:page-number="auto">
-    <style:tab-stops/>
-   </style:paragraph-properties>
-   <style:text-properties fo:text-transform="uppercase" fo:font-weight="bold"/>
-  </style:style>
-  <style:style style:name="Heading_20_2" style:display-name="Heading 2" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="2" style:list-style-name="" style:class="text" style:master-page-name="">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin-top="1.461cm" fo:margin-bottom="0.73cm" style:page-number="auto"/>
-   <style:text-properties fo:font-weight="bold"/>
-  </style:style>
-  <style:style style:name="Heading_20_3" style:display-name="Heading 3" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="3" style:list-style-name="" style:class="text" style:master-page-name="">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin-top="0.73cm" fo:margin-bottom="0.73cm" style:page-number="auto"/>
-   <style:text-properties fo:font-style="italic"/>
-  </style:style>
-  <style:style style:name="Heading_20_4" style:display-name="Heading 4" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="" style:list-style-name="" style:class="text" style:master-page-name="">
-   <style:paragraph-properties fo:margin-top="0.73cm" fo:margin-bottom="0.73cm" style:page-number="auto"/>
-  </style:style>
-  <style:style style:name="Heading_20_5" style:display-name="Heading 5" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="" style:list-style-name="" style:class="text" style:master-page-name="">
-   <style:paragraph-properties style:page-number="auto"/>
-  </style:style>
-  <style:style style:name="Heading_20_6" style:display-name="Heading 6" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="" style:list-style-name="" style:class="text"/>
-  <style:style style:name="Heading_20_7" style:display-name="Heading 7" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="" style:list-style-name="" style:class="text"/>
-  <style:style style:name="Heading_20_8" style:display-name="Heading 8" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="" style:list-style-name="" style:class="text"/>
-  <style:style style:name="Heading_20_9" style:display-name="Heading 9" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="" style:list-style-name="" style:class="text"/>
-  <style:style style:name="Heading_20_10" style:display-name="Heading 10" style:family="paragraph" style:parent-style-name="Heading" style:next-style-name="Text_20_body" style:default-outline-level="10" style:list-style-name="" style:class="text">
-   <style:text-properties fo:font-size="75%" fo:font-weight="bold"/>
-  </style:style>
-  <style:style style:name="Header_20_and_20_Footer" style:display-name="Header and Footer" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
-   <style:paragraph-properties text:number-lines="false" text:line-number="0">
-    <style:tab-stops>
-     <style:tab-stop style:position="8.5cm" style:type="center"/>
-     <style:tab-stop style:position="17cm" style:type="right"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="Header" style:family="paragraph" style:parent-style-name="Standard" style:class="extra" style:master-page-name="">
-   <style:paragraph-properties fo:text-align="end" style:justify-single-word="false" style:page-number="auto" fo:padding="0.049cm" fo:border-left="none" fo:border-right="none" fo:border-top="none" fo:border-bottom="0.002cm solid #000000" style:shadow="none">
-    <style:tab-stops>
-     <style:tab-stop style:position="8.5cm" style:type="center"/>
-     <style:tab-stop style:position="17.002cm" style:type="right"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-   <style:text-properties fo:font-variant="normal" fo:text-transform="none" fo:font-style="italic"/>
-  </style:style>
-  <style:style style:name="Header_20_left" style:display-name="Header left" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
-   <style:paragraph-properties>
-    <style:tab-stops>
-     <style:tab-stop style:position="8.5cm" style:type="center"/>
-     <style:tab-stop style:position="17.002cm" style:type="right"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="Header_20_right" style:display-name="Header right" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
-   <style:paragraph-properties>
-    <style:tab-stops>
-     <style:tab-stop style:position="8.5cm" style:type="center"/>
-     <style:tab-stop style:position="17.002cm" style:type="right"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="Footer" style:family="paragraph" style:parent-style-name="Standard" style:class="extra" style:master-page-name="">
-   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false" style:page-number="auto" text:number-lines="false" text:line-number="0">
-    <style:tab-stops>
-     <style:tab-stop style:position="8.5cm" style:type="center"/>
-     <style:tab-stop style:position="17.002cm" style:type="right"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-   <style:text-properties fo:font-size="11pt"/>
-  </style:style>
-  <style:style style:name="Footer_20_left" style:display-name="Footer left" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
-   <style:paragraph-properties>
-    <style:tab-stops>
-     <style:tab-stop style:position="8.5cm" style:type="center"/>
-     <style:tab-stop style:position="17.002cm" style:type="right"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="Footer_20_right" style:display-name="Footer right" style:family="paragraph" style:parent-style-name="Standard" style:class="extra">
-   <style:paragraph-properties>
-    <style:tab-stops>
-     <style:tab-stop style:position="8.5cm" style:type="center"/>
-     <style:tab-stop style:position="17.002cm" style:type="right"/>
-    </style:tab-stops>
-   </style:paragraph-properties>
-  </style:style>
-  <style:style style:name="Title" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Subtitle" style:class="chapter" style:master-page-name="">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin="100%" fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="0.000cm" fo:margin-bottom="0cm" fo:line-height="200%" fo:text-align="center" style:justify-single-word="false" fo:text-indent="0cm" style:auto-text-indent="false" style:page-number="auto" fo:background-color="transparent" fo:padding="0cm" fo:border="none" text:number-lines="false" text:line-number="0">
-    <style:tab-stops/>
-    <style:background-image/>
-   </style:paragraph-properties>
-   <style:text-properties fo:text-transform="uppercase" fo:font-weight="normal" style:letter-kerning="false"/>
-  </style:style>
-  <style:style style:name="Subtitle" style:family="paragraph" style:parent-style-name="Title" style:class="chapter" style:master-page-name="">
-   <style:paragraph-properties loext:contextual-spacing="false" fo:margin-top="0cm" fo:margin-bottom="0cm" style:page-number="auto"/>
-   <style:text-properties fo:font-variant="normal" fo:text-transform="none" fo:letter-spacing="normal" fo:font-style="italic" fo:font-weight="normal"/>
-  </style:style>
-  <style:style style:name="Quotations" style:family="paragraph" style:parent-style-name="Text_20_body" style:class="html">
-   <style:paragraph-properties fo:margin="100%" fo:margin-left="1cm" fo:margin-right="0cm" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:text-indent="0cm" style:auto-text-indent="false"/>
-   <style:text-properties style:font-name="Consolas"/>
-  </style:style>
-  <style:style style:name="yWriter_20_mark" style:display-name="yWriter mark" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Standard" style:class="text">
-   <style:text-properties fo:color="#008000" fo:font-size="10pt"/>
-  </style:style>
-  <style:style style:name="yWriter_20_mark_20_unused" style:display-name="yWriter mark unused" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Standard" style:class="text">
-   <style:text-properties fo:color="#808080" fo:font-size="10pt"/>
-  </style:style>
-  <style:style style:name="yWriter_20_mark_20_notes" style:display-name="yWriter mark notes" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Standard" style:class="text">
-   <style:text-properties fo:color="#0000FF" fo:font-size="10pt"/>
-  </style:style>
-  <style:style style:name="yWriter_20_mark_20_todo" style:display-name="yWriter mark todo" style:family="paragraph" style:parent-style-name="Standard" style:next-style-name="Standard" style:class="text">
-   <style:text-properties fo:color="#B22222" fo:font-size="10pt"/>
-  </style:style>
-  <style:style style:name="Emphasis" style:family="text">
-   <style:text-properties fo:font-style="italic" fo:background-color="transparent"/>
-  </style:style>
-  <style:style style:name="Strong_20_Emphasis" style:display-name="Strong Emphasis" style:family="text">
-   <style:text-properties fo:text-transform="uppercase"/>
-  </style:style>
- </office:styles>
- <office:automatic-styles>
-  <style:page-layout style:name="Mpm1">
-   <style:page-layout-properties fo:page-width="21.001cm" fo:page-height="29.7cm" style:num-format="1" style:paper-tray-name="[From printer settings]" style:print-orientation="portrait" fo:margin-top="3.2cm" fo:margin-bottom="2.499cm" fo:margin-left="2.701cm" fo:margin-right="3cm" style:writing-mode="lr-tb" style:layout-grid-color="#c0c0c0" style:layout-grid-lines="20" style:layout-grid-base-height="0.706cm" style:layout-grid-ruby-height="0.353cm" style:layout-grid-mode="none" style:layout-grid-ruby-below="false" style:layout-grid-print="false" style:layout-grid-display="false" style:footnote-max-height="0cm">
-    <style:columns fo:column-count="1" fo:column-gap="0cm"/>
-    <style:footnote-sep style:width="0.018cm" style:distance-before-sep="0.101cm" style:distance-after-sep="0.101cm" style:adjustment="left" style:rel-width="25%" style:color="#000000"/>
-   </style:page-layout-properties>
-   <style:header-style/>
-   <style:footer-style>
-    <style:header-footer-properties fo:min-height="1.699cm" fo:margin-left="0cm" fo:margin-right="0cm" fo:margin-top="1.199cm" style:shadow="none" style:dynamic-spacing="false"/>
-   </style:footer-style>
-  </style:page-layout>
- </office:automatic-styles>
- <office:master-styles>
-  <style:master-page style:name="Standard" style:page-layout-name="Mpm1">
-   <style:footer>
-    <text:p text:style-name="Footer"><text:page-number text:select-page="current"/></text:p>
-   </style:footer>
-  </style:master-page>
- </office:master-styles>
-</office:document-styles>
-'''
-    _MIMETYPE = 'application/vnd.oasis.opendocument.text'
+    _SETTINGS_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:zoom w:percent="100"/><w:defaultTabStop w:val="709"/><w:autoHyphenation w:val="true"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat><w:themeFontLang w:val="" w:eastAsia="" w:bidi=""/></w:settings>'''
 
     def _set_up(self):
         """Helper method for ZIP file generation.
 
-        Add rdf manifest to the temporary directory containing the internal structure of an OXML file.
+        Build the temporary directory containing the internal structure of an OXML file.
         Return a message beginning with the ERROR constant in case of error.
         Extends the superclass method.
         """
@@ -383,12 +68,62 @@ class OdtFile(OxmlFile):
         if message.startswith(ERROR):
             return message
 
-        # Generate manifest.rdf
+        os.mkdir(f'{self._tempDir}/word')
+        os.mkdir(f'{self._tempDir}/word/_rels')
+
+        #--- Generate docProps/app.xml.
+        appMapping = dict(
+        )
+        template = Template(self._APP_XML)
+        text = template.safe_substitute(appMapping)
         try:
-            with open(f'{self._tempDir}/manifest.rdf', 'w', encoding='utf-8') as f:
-                f.write(self._MANIFEST_RDF)
+            with open(f'{self._tempDir}/docProps/app.xml', 'w', encoding='utf-8') as f:
+                f.write(text)
         except:
-            return f'{ERROR}Cannot write "manifest.rdf"'
+            return f'{ERROR}Cannot write "app.xml"'
+
+        #--- Generate word/document.xml.rels.
+        try:
+            with open(f'{self._tempDir}/word/_rels/document.xml.rels', 'w', encoding='utf-8') as f:
+                f.write(self._DOCUMENT_XML_RELS)
+        except:
+            return f'{ERROR}Cannot write "document.xml.rels"'
+
+        #--- Generate word/styles.xml.
+        try:
+            with open(f'{self._tempDir}/word/styles.xml', 'w', encoding='utf-8') as f:
+                f.write(self._STYLES_XML)
+        except:
+            return f'{ERROR}Cannot write "styles.xml"'
+
+        #--- Generate word/fontTable.xml.
+        try:
+            with open(f'{self._tempDir}/word/fontTable.xml', 'w', encoding='utf-8') as f:
+                f.write(self._FONT_TABLE_XML)
+        except:
+            return f'{ERROR}Cannot write "fontTable.xml"'
+
+        #--- Generate word/footer1.xml.
+        try:
+            with open(f'{self._tempDir}/word/footer1.xml', 'w', encoding='utf-8') as f:
+                f.write(self._FOOTER1_XML)
+        except:
+            return f'{ERROR}Cannot write "footer1.xml"'
+
+        #--- Generate word/settings.xml.
+        try:
+            with open(f'{self._tempDir}/word/settings.xml', 'w', encoding='utf-8') as f:
+                f.write(self._SETTINGS_XML)
+        except:
+            return f'{ERROR}Cannot write "settings.xml"'
+
+        #--- Generate word/document.xml.
+        self._originalPath = self._filePath
+        self._filePath = f'{self._tempDir}/word/document.xml'
+        message = FileExport.write(self)
+        self._filePath = self._originalPath
+        if message.startswith(ERROR):
+            return message
 
         return 'DOCX structure generated.'
 
