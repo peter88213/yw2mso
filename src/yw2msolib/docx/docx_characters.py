@@ -15,19 +15,19 @@ class DocxCharacters(DocxFile):
     DESCRIPTION = 'Character descriptions'
     SUFFIX = '_characters'
 
-    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
-<text:p text:style-name="Subtitle">$AuthorName</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<w:p><w:pPr><w:pStyle w:val="Title"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Subtitle"/></w:pPr><w:r><w:t>$AuthorName</w:t></w:r></w:p>
 '''
 
-    _characterTemplate = '''<text:h text:style-name="Heading_20_2" text:outline-level="2">$Title$FullName$AKA</text:h>
-<text:h text:style-name="Heading_20_3" text:outline-level="3">Description</text:h>
-<text:p text:style-name="Text_20_body">$Desc</text:p>
-<text:h text:style-name="Heading_20_3" text:outline-level="3">Bio</text:h>
-<text:p text:style-name="Text_20_body">$Bio</text:p>
-<text:h text:style-name="Heading_20_3" text:outline-level="3">Goals</text:h>
-<text:p text:style-name="Text_20_body">$Goals</text:p>
-<text:h text:style-name="Heading_20_3" text:outline-level="3">Notes</text:h>
-<text:p text:style-name="Text_20_body">$Notes</text:p>
+    _characterTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>$Title$FullName$AKA</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Description</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Desc</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Bio</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Bio</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Goals</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Goals</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Notes</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Notes</w:t></w:r></w:p>
 '''
 
     _fileFooter = DocxFile._DOCUMENT_XML_FOOTER

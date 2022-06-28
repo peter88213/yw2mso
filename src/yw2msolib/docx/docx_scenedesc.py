@@ -15,42 +15,18 @@ class DocxSceneDesc(DocxFile):
     DESCRIPTION = 'Scene descriptions'
     SUFFIX = '_scenes'
 
-    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
-<text:p text:style-name="Subtitle">$AuthorName</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<w:p><w:pPr><w:pStyle w:val="Title"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Subtitle"/></w:pPr><w:r><w:t>$AuthorName</w:t></w:r></w:p>
 '''
 
-    _partTemplate = '''<text:section text:style-name="Sect1" text:name="ChID:$ID">
-<text:h text:style-name="Heading_20_1" text:outline-level="1"><text:a xlink:href="../${ProjectName}_parts.odt#ChID:$ID%7Cregion">$Title</text:a></text:h>
+    _partTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
 '''
 
-    _chapterTemplate = '''<text:section text:style-name="Sect1" text:name="ChID:$ID">
-<text:h text:style-name="Heading_20_2" text:outline-level="2"><text:a xlink:href="../${ProjectName}_chapters.odt#ChID:$ID%7Cregion">$Title</text:a></text:h>
+    _chapterTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
 '''
 
-    _sceneTemplate = '''<text:section text:style-name="Sect1" text:name="ScID:$ID">
-<text:p text:style-name="Text_20_body"><office:annotation>
-<dc:creator>scene title</dc:creator>
-<text:p>~ ${Title} ~</text:p>
-<text:p/>
-<text:p><text:a xlink:href="../${ProjectName}_manuscript.odt#ScID:$ID%7Cregion">→Manuscript</text:a></text:p>
-</office:annotation>$Desc</text:p>
-</text:section>
+    _sceneTemplate = '''<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Desc</w:t></w:r></w:p>
 '''
 
-    _appendedSceneTemplate = '''<text:section text:style-name="Sect1" text:name="ScID:$ID">
-<text:p text:style-name="First_20_line_20_indent"><office:annotation>
-<dc:creator>scene title</dc:creator>
-<text:p>~ ${Title} ~</text:p>
-<text:p/>
-<text:p><text:a xlink:href="../${ProjectName}_manuscript.odt#ScID:$ID%7Cregion">→Manuscript</text:a></text:p>
-</office:annotation>$Desc</text:p>
-</text:section>
-'''
-
-    _sceneDivider = '''<text:p text:style-name="Heading_20_4">* * *</text:p>
-'''
-
-    _chapterEndTemplate = '''</text:section>
-'''
-
+    _sceneDivider = '<w:p><w:pPr><w:pStyle w:val="Heading4"/><w:ind w:hanging="0"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>* * *</w:t></w:r></w:p>\n'
     _fileFooter = DocxFile._DOCUMENT_XML_FOOTER

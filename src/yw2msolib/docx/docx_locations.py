@@ -15,12 +15,12 @@ class DocxLocations(DocxFile):
     DESCRIPTION = 'Location descriptions'
     SUFFIX = '_locations'
 
-    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
-<text:p text:style-name="Subtitle">$AuthorName</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<w:p><w:pPr><w:pStyle w:val="Title"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Subtitle"/></w:pPr><w:r><w:t>$AuthorName</w:t></w:r></w:p>
 '''
 
-    _locationTemplate = '''<text:h text:style-name="Heading_20_2" text:outline-level="2">$Title$AKA</text:h>
-<text:p text:style-name="Text_20_body">$Desc</text:p>
+    _locationTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>$Title$AKA</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Desc</w:t></w:r></w:p>
 '''
 
     _fileFooter = DocxFile._DOCUMENT_XML_FOOTER

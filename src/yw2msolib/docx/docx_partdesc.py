@@ -17,12 +17,12 @@ class DocxPartDesc(DocxFile):
     DESCRIPTION = 'Part descriptions'
     SUFFIX = '_parts'
 
-    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<text:p text:style-name="Title">$Title</text:p>
-<text:p text:style-name="Subtitle">$AuthorName</text:p>
+    _fileHeader = f'''{DocxFile._DOCUMENT_XML_HEADER}<w:p><w:pPr><w:pStyle w:val="Title"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="Subtitle"/></w:pPr><w:r><w:t>$AuthorName</w:t></w:r></w:p>
 '''
 
-    _partTemplate = '''<text:h text:style-name="Heading_20_1" text:outline-level="1">$Title</text:h>
-<text:p text:style-name="Text_20_body">$Desc</text:p>
+    _partTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Desc</w:t></w:r></w:p>
 '''
 
     _fileFooter = DocxFile._DOCUMENT_XML_FOOTER
