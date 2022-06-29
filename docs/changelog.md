@@ -4,5 +4,6 @@
 
 ## Changelog
 
-### v1.0.0 
-- First public release
+v0.1.0 Alpha
+
+Generate DOCX files with character formatting. 

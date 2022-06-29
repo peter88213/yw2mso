@@ -22,10 +22,10 @@ class DocxExport(DocxFile):
     _chapterTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>$Title</w:t></w:r></w:p>
 '''
 
-    _sceneTemplate = '''<w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$SceneContent</w:t></w:r></w:p>
+    _sceneTemplate = '''<w:p><w:pPr><w:pStyle w:val="BodyText"/></w:pPr><w:r><w:t>$SceneContent</w:t></w:r></w:p>
 '''
 
-    _appendedSceneTemplate = '''<w:p><w:pPr><w:pStyle w:val="BodyTextIndent"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$SceneContent</w:t></w:r></w:p>
+    _appendedSceneTemplate = '''<w:p><w:pPr><w:pStyle w:val="BodyTextIndent"/></w:pPr><w:r><w:t>$SceneContent</w:t></w:r></w:p>
 '''
 
     _sceneDivider = '<w:p><w:pPr><w:pStyle w:val="Heading4"/><w:ind w:hanging="0"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>* * *</w:t></w:r></w:p>\n'
