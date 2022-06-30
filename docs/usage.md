@@ -1,12 +1,20 @@
+[Project homepage](https://peter88213.github.io/yw2mso)
+
 ------------------------------------------------------------------
 
 ## Command reference
 
 -   [Export to docx](#export-to-docx)
--   [Scene list](#scene-list)
+-   [Brief synopsis](#brief-synopsis)
+-   [Scene descriptions](#scene-descriptions)
+-   [Chapter descriptions](#chapter-descriptions)
+-   [Part descriptions](#part-descriptions)
+-   [Character descriptions](#character-descriptions)
+-   [Location descriptions](#location-descriptions)
+-   [Item descriptions](#item-descriptions)
 
 
-yWriter to OpenOffice/LibreOffice converter - yWriter export to docx/xlsx documents. 
+yWriter export to MS Office documents. 
 
 # Instructions for use
 
@@ -27,23 +35,20 @@ You can remove the context menu entries by double-clicking  `rem_context_menu.re
 
 Please note that these context menus depend on the currently installed Python version. After a major Python update you may need to run the setup program again and renew the registry entries.
 
-## How to use yw2mso
+### Operation
 
-1. Move into your yWriter project folder, and right-click your .yw7 project file. 
-   In the context menu, choose `Export to OpenOffice`. 
-   
-2. A sub menu with document types will open. Select the desired one.
+#### Open a yWriter project
 
-3. If everything goes well, a success message pops up. The newly created file is located 
-   in the same folder as your yWriter project. If you want to edit your new document immediately, 
-   just click on the `open` button. 
+- If no yWriter project is specified by dragging and dropping on the program icon, the latest project selected is preset. You can change it with **File > Open** or **Ctrl-o***.
 
+#### Close the ywriter project
 
-## How to uninstall yw2mso
+- You can close the project without exiting the program with **File > Close**.
+- If you open another project, the current project is automatically closed.
 
-Move into the installation folder `~\.yw2oo` and double click on `rem_context_menu.reg`. 
-You may be asked for approval to modify the registry. Please accept to remove the Explorer context
-menu entry. 
+#### Exit 
+
+- You can exit with **File > Exit** of **Ctrl-q**.
 
 
 # Command reference
@@ -62,7 +67,7 @@ text document (docx).
 -   Only scenes that are intended for RTF export in yWriter will be
     exported.
 -   Comments in the text bracketed with slashes and asterisks (like
-    `/* this is a comment */`) are converted to author's comments.
+    `/* this is a comment */`) are taken over unchanged.
 -   Interspersed HTML, TEX, or RTF commands are taken over unchanged.
 -   Gobal variables and project variables are not resolved.
 -   Chapter titles appear as first level heading if the chapter is
@@ -73,37 +78,12 @@ text document (docx).
     as "chapter" headings.
 -   Scene titles appear as navigable comments pinned to the beginning of
     the scene.
--   Usually, scenes are separated by blank lines. The first line is not
+-   Usually, scenes are separated by three asterisks. The first line is not
     indented.
 -   Starting from the second paragraph, paragraphs begin with
     indentation of the first line.
 -   Scenes marked "attach to previous scene" in yWriter appear like
     continuous paragraphs.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
-## Proof reading
-
-This will load yWriter 7 chapters and scenes into a new OpenDocument
-text document (docx) with chapter and scene markers. File name suffix is
-`_proof`.
-
--   The proof read document is placed in the same folder as the yWriter
-    project.
--   Document's filename: `<yW project name>_proof.docx`.
--   Text markup: Bold and italics are supported. Other highlighting such
-    as underline and strikethrough are lost.
--   All chapters and scenes will be exported, whether "used" or
-    "unused".
--   The document contains chapter `[ChID:x]` and scene `[ScID:y]`
-    markers according to yWriter 5 standard. **Do not touch lines
-    containing the markers** if you want to be able to reimport the
-    document into yWriter.
--   Back up your yWriter project and close yWriter before.
 
 
 
@@ -127,18 +107,6 @@ This will load a brief synopsis with chapter and scenes titles into a new
     marked as beginning of a new section. Such headings are considered
     as "chapter" headings.
 -   Scene titles appear as plain paragraphs.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
-## Manuscript
-
-This will load yWriter 7 chapters and scenes into a new OpenDocument
-text document (docx) with invisible chapter and scene sections (to be
-seen in the Navigator). File name suffix is `_manuscript`.
 
 
 
@@ -187,75 +155,6 @@ be edited and written back to yWriter format. File name suffix is
 
 
 
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
-## Character list
-
-This will generate a new OpenDocument spreadsheet (xlsx) containing a
-character list that can be edited in Office Calc and written back to
-yWriter format. File name suffix is `_charlist`.
-
-You may change the sort order of the rows. You may also add or remove
-rows. New entities must get a unique ID.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
-## Location list
-
-This will generate a new OpenDocument spreadsheet (xlsx) containing a
-location list that can be edited in Office Calc and written back to
-yWriter format. File name suffix is `_loclist`.
-
-You may change the sort order of the rows. You may also add or remove
-rows. New entities must get a unique ID.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
-## Item list
-
-This will generate a new OpenDocument spreadsheet (xlsx) containing an
-item list that can be edited in Office Calc and written back to yWriter
-format. File name suffix is `_itemlist`.
-
-You may change the sort order of the rows. You may also add or remove
-rows. New entities must get a unique ID.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
-## Cross references
-
-This will generate a new OpenDocument text document (docx) containing
-navigable cross references. File name suffix is `_xref`. The cross
-references are:
-
--   Scenes per character,
--   scenes per location,
--   scenes per item,
--   scenes per tag,
--   characters per tag,
--   locations per tag,
--   items per tag.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
 ## Character descriptions
 
 This will generate a new OpenDocument text document (docx) containing
@@ -293,33 +192,10 @@ to yWriter format. File name suffix is `_items`.
 
 ------------------------------------------------------------------------
 
-## Scene list
-
-This will generate a new OpenDocument spreadsheet (xlsx) listing scene
-title, scene descriptions, and links to the manuscript's scene
-sections. Further scene metadata (e.g. tags, goals, time), if any. File
-name suffix is `_scenelist`.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
-## Notes chapters
-
-This will write yWriter 7 "Notes" chapters with child scenes into a new 
-OpenDocument text document (docx) with invisible chapter and scene 
-sections (to be seen in the Navigator). File name suffix is `_notes`.
-
-
-
-[Top of page](#top)
-
-------------------------------------------------------------------------
-
 
 ## Installation path
 
-The **setup.py** installation script installs *yw2oo.pyw* in the user profile. This is the OptioOptioOptionally, you can appendter\yw2oo`
+The setup script installs *yw2mso.pyw* in the user profile. This is the installation path on Windows: 
+
+`c:\Users\<user name>\.pywriter\yw2mso`
 

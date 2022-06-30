@@ -44,121 +44,6 @@ python3 '$Apppath' %F
 
 APP = 'yw2mso.pyw'
 
-SET_CONTEXT_MENU = '''Windows Registry Editor Version 5.00
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso]
-"MUIVerb"="Export to OpenOffice"
-"subcommands"=""
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell]
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\000export]
-@="Export to odt"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\000export\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\""
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\010proof]
-@="Proof reading"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\010proof\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _proof"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\020brfsynopsis]
-@="Brief Synopsis"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\020brfsynopsis\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _brf_synopsis"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\030manuscript]
-@="Manuscript"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\030manuscript\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _manuscript"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\040scenedesc]
-@="Scene Descriptions"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\040scenedesc\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _scenes"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\050chapterdesc]
-@="Chapter Descriptions"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\050chapterdesc\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _chapters"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\060partdesc]
-@="Part Descriptions"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\060partdesc\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _parts"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\070charlist]
-@="Character List"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\070charlist\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _charlist"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\080loclist]
-@="Location List"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\080loclist\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _loclist"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\090itemlist]
-@="Item List"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\090itemlist\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _itemlist"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\100crossreference]
-@="Cross references"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\100crossreference\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _xref"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\110chardesc]
-@="Character Descriptions"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\110chardesc\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _characters"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\120locdesc]
-@="Location Descriptions"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\120locdesc\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _locations"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\130itemdesc]
-@="Item Descriptions"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\130itemdesc\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _items"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\140scenelist]
-@="Scene List"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\140scenelist\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _scenelist"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\150notes]
-@="Notes Chapters"
-
-[HKEY_CURRENT_USER\Software\Classes\\yWriter7\\shell\\yw2mso\\shell\\150notes\\command]
-@="\\"${PYTHON}\\" \\"${SCRIPT}\\" \\"%1\\" _notes"
-
-[-HKEY_CURRENT_USER\Software\Classes\yWriter6\shell\yw2mso]
-[-HKEY_CURRENT_USER\Software\Classes\yWriter5\shell\yw2mso]
-'''
-
-RESET_CONTEXT_MENU = '''Windows Registry Editor Version 5.00
-
-[-HKEY_CURRENT_USER\Software\Classes\yWriter7\shell\yw2mso]
-[-HKEY_CURRENT_USER\Software\Classes\yWriter6\shell\yw2mso]
-[-HKEY_CURRENT_USER\Software\Classes\yWriter5\shell\yw2mso]
-'''
-
 root = Tk()
 processInfo = Label(root, text='')
 message = []
@@ -167,23 +52,6 @@ message = []
 def output(text):
     message.append(text)
     processInfo.config(text=('\n').join(message))
-
-
-def make_context_menu(installPath):
-    """Generate ".reg" files to extend the yWriter context menu."""
-
-    def save_reg_file(filePath, template, mapping):
-        """Save a registry file."""
-        with open(filePath, 'w', encoding='utf-8') as f:
-            f.write(template.safe_substitute(mapping))
-        output(f'Creating "{os.path.normpath(filePath)}"')
-
-    python = sys.executable.replace('\\', '\\\\')
-    instPath = installPath.replace('/', '\\\\')
-    script = f'{instPath}\\\\{APP}'
-    mapping = dict(PYTHON=python, SCRIPT=script)
-    save_reg_file(f'{installPath}/add_context_menu.reg', Template(SET_CONTEXT_MENU), mapping)
-    save_reg_file(f'{installPath}/rem_context_menu.reg', Template(RESET_CONTEXT_MENU), {})
 
 
 def open_folder(installDir):
@@ -251,10 +119,6 @@ def install(pywriterPath):
                     output(f'Keeping "{file.name}"')
     except:
         pass
-
-    # Generate registry entries for the context menu (Windows only).
-    if os.name == 'nt':
-        make_context_menu(installDir)
 
     # Display a success message.
     mapping = {'Appname': APPNAME, 'Apppath': f'{installDir}/{APP}'}

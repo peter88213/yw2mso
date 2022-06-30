@@ -6,6 +6,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 from pywriter.converter.yw_cnv_ff import YwCnvFf
 from pywriter.yw.yw7_file import Yw7File
+
 from yw2msolib.docx.docx_scenedesc import DocxSceneDesc
 from yw2msolib.docx.docx_chapterdesc import DocxChapterDesc
 from yw2msolib.docx.docx_partdesc import DocxPartDesc
@@ -14,10 +15,6 @@ from yw2msolib.docx.docx_export import DocxExport
 from yw2msolib.docx.docx_characters import DocxCharacters
 from yw2msolib.docx.docx_items import DocxItems
 from yw2msolib.docx.docx_locations import DocxLocations
-from yw2msolib.xlsx.xlsx_charlist import XlsxCharList
-from yw2msolib.xlsx.xlsx_loclist import XlsxLocList
-from yw2msolib.xlsx.xlsx_itemlist import XlsxItemList
-from yw2msolib.xlsx.xlsx_scenelist import XlsxSceneList
 
 
 class Yw2msoExporter(YwCnvFf):
@@ -33,18 +30,18 @@ class Yw2msoExporter(YwCnvFf):
     Overrides the superclass constants EXPORT_SOURCE_CLASSES, EXPORT_TARGET_CLASSES.    
     """
     EXPORT_SOURCE_CLASSES = [Yw7File]
-    EXPORT_TARGET_CLASSES = [DocxBriefSynopsis,
+    EXPORT_TARGET_CLASSES = [DocxExport,
+                             DocxBriefSynopsis,
                              DocxSceneDesc,
                              DocxChapterDesc,
                              DocxPartDesc,
-                             DocxExport,
                              DocxCharacters,
-                             DocxItems,
                              DocxLocations,
-                             XlsxCharList,
-                             XlsxLocList,
-                             XlsxItemList,
-                             XlsxSceneList,
+                             DocxItems,
+                             # XlsxSceneList,
+                             # XlsxCharList,
+                             # XlsxLocList,
+                             # XlsxItemList,
                              ]
 
     def export_from_yw(self, source, target):
@@ -58,5 +55,7 @@ class Yw2msoExporter(YwCnvFf):
         """
         super().export_from_yw(source, target)
         if self.newFile:
-            self.ui._show_open_button(self._open_newFile)
+            self.ui.show_open_button()
+        else:
+            self.ui.hide_open_button()
 
