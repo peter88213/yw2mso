@@ -55,7 +55,7 @@ Please note that these context menus depend on the currently installed Python ve
 
 ## Export to docx
 
-This will load yWriter 7 chapters and scenes into a new OpenDocument
+This will load yWriter 7 chapters and scenes into a new Open XML
 text document (docx).
 
 -   The document is placed in the same folder as the yWriter project.
@@ -94,7 +94,7 @@ text document (docx).
 ## Brief synopsis
 
 This will load a brief synopsis with chapter and scenes titles into a new
- OpenDocument teOptionally, you can append placed in the same folder as the yWriter project.
+ Open XML text document (docx) placed in the same folder as the yWriter project.
 -   Document's **filename**: `<yW project name_brf_synopsis>.docx`.
 -   Only "normal" chapters and scenes are exported. Chapters and
     scenes marked "unused", "todo" or "notes" are not exported.
@@ -116,7 +116,7 @@ This will load a brief synopsis with chapter and scenes titles into a new
 
 ## Scene descriptions
 
-This will generate a new OpenDocument text document (docx) containing a
+This will generate a new Open XML text document (docx) containing a
 **full synopsis** with chapter titles and scene descriptions that can be
 edited and written back to yWriter format. File name suffix is
 `_scenes`.
@@ -129,7 +129,7 @@ edited and written back to yWriter format. File name suffix is
 
 ## Chapter descriptions
 
-This will generate a new OpenDocument text document (docx) containing a
+This will generate a new Open XML text document (docx) containing a
 **brief synopsis** with chapter titles and chapter descriptions that can
 be edited and written back to yWriter format. File name suffix is
 `_chapters`.
@@ -145,7 +145,7 @@ be edited and written back to yWriter format. File name suffix is
 
 ## Part descriptions
 
-This will generate a new OpenDocument text document (docx) containing a
+This will generate a new Open XML text document (docx) containing a
 **very brief synopsis** with part titles and part descriptions that can
 be edited and written back to yWriter format. File name suffix is
 `_parts`.
@@ -157,7 +157,7 @@ be edited and written back to yWriter format. File name suffix is
 
 ## Character descriptions
 
-This will generate a new OpenDocument text document (docx) containing
+This will generate a new Open XML text document (docx) containing
 character descriptions, bio, goals, and notes that can be edited in Office
 Writer and written back to yWriter format. File name suffix is
 `_characters`.
@@ -170,7 +170,7 @@ Writer and written back to yWriter format. File name suffix is
 
 ## Location descriptions
 
-This will generate a new OpenDocument text document (docx) containing
+This will generate a new Open XML text document (docx) containing
 location descriptions that can be edited in Office Writer and written
 back to yWriter format. File name suffix is `_locations`.
 
@@ -182,7 +182,7 @@ back to yWriter format. File name suffix is `_locations`.
 
 ## Item descriptions
 
-This will generate a new OpenDocument text document (docx) containing
+This will generate a new Open XML text document (docx) containing
 item descriptions that can be edited in Office Writer and written back
 to yWriter format. File name suffix is `_items`.
 

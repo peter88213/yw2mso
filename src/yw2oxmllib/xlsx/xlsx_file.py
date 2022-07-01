@@ -10,7 +10,7 @@ from yw2oxmllib.oxml.oxml_file import OxmlFile
 
 
 class XlsxFile(OxmlFile):
-    """Generic OpenDocument spreadsheet document representation."""
+    """Generic Open XML spreadsheet document representation."""
     EXTENSION = '.xlsx'
     _OXML_COMPONENTS = ['META-INF', 'content.xml', 'meta.xml', 'mimetype',
                       'settings.xml', 'styles.xml', 'META-INF/manifest.xml']

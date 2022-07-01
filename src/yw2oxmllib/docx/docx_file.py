@@ -17,7 +17,7 @@ from yw2oxmllib.oxml.oxml_file import OxmlFile
 
 
 class DocxFile(OxmlFile):
-    """Generic OpenDocument text document representation."""
+    """Generic Open XML text document representation."""
 
     EXTENSION = '.docx'
     # overwrites Novel.EXTENSION
