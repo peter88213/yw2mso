@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### v0.4.0
+
+Rename the Project from yw2mso to yw2oxml
+
 ### v0.2.1 Alpha
 
 Fix Word styles and metadata.
