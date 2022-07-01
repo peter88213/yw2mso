@@ -25,7 +25,7 @@ first uninstall your current yW2OO installation with its included **Uninstall.ba
 
 ## Download and install
 
-[Download the latest release (version 0.2.0)](https://raw.githubusercontent.com/peter88213/yw2mso/main/dist/yw2mso_v0.2.0.zip)
+[Download the latest release (version 0.2.1)](https://raw.githubusercontent.com/peter88213/yw2mso/main/dist/yw2mso_v0.2.1.zip)
 
 [Instructions for installation and use](usage)
 
