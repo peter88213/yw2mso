@@ -16,12 +16,6 @@
 
 - Windows.
 - [Python 3.6+](https://www.python.org).  
-- An [OpenOffice](http://www.openoffice.org/) or [LibreOffice](https://www.libreoffice.org/) installation.
-
-## Please note: 
-
-yW2OO was fundamentally revised. If you want to update it from a version less than v3, 
-first uninstall your current yW2OO installation with its included **Uninstall.bat** script.
 
 ## Download and install
 
