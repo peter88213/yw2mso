@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Install the yw2mso script and set up the registry files
+"""Install the yw2oxml script and set up the registry files
 for extending the yWriter context menu. 
 
 Version @release
 
 Copyright (c) 2022 Peter Triesberger
-For further information see https://github.com/peter88213/yw2mso
+For further information see https://github.com/peter88213/yw2oxml
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import sys
@@ -20,7 +20,7 @@ except ModuleNotFoundError:
     print('The tkinter module is missing. Please install the tk support package for your python3 version.')
     sys.exit(1)
 
-APPNAME = 'yw2mso'
+APPNAME = 'yw2oxml'
 VERSION = ' @release'
 APP = f'{APPNAME}.pyw'
 INI_FILE = f'{APPNAME}.ini'
@@ -42,7 +42,7 @@ On Linux, create a launcher on your desktop. With xfce for instance, the launche
 python3 '$Apppath' %F
 '''
 
-APP = 'yw2mso.pyw'
+APP = 'yw2oxml.pyw'
 
 root = Tk()
 processInfo = Label(root, text='')

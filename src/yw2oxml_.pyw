@@ -11,9 +11,9 @@ import sys
 import argparse
 from pathlib import Path
 from pywriter.config.configuration import Configuration
-from yw2msolib.yw2mso_tk import Yw2msoTk
+from yw2oxmllib.yw2oxml_tk import Yw2msoTk
 
-APPNAME = 'yw2mso'
+APPNAME = 'yw2oxml'
 SETTINGS = dict(
     yw_last_open='',
     root_geometry='600x100',

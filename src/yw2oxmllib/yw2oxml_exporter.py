@@ -7,14 +7,14 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 from pywriter.converter.yw_cnv_ff import YwCnvFf
 from pywriter.yw.yw7_file import Yw7File
 
-from yw2msolib.docx.docx_scenedesc import DocxSceneDesc
-from yw2msolib.docx.docx_chapterdesc import DocxChapterDesc
-from yw2msolib.docx.docx_partdesc import DocxPartDesc
-from yw2msolib.docx.docx_brief_synopsis import DocxBriefSynopsis
-from yw2msolib.docx.docx_export import DocxExport
-from yw2msolib.docx.docx_characters import DocxCharacters
-from yw2msolib.docx.docx_items import DocxItems
-from yw2msolib.docx.docx_locations import DocxLocations
+from yw2oxmllib.docx.docx_scenedesc import DocxSceneDesc
+from yw2oxmllib.docx.docx_chapterdesc import DocxChapterDesc
+from yw2oxmllib.docx.docx_partdesc import DocxPartDesc
+from yw2oxmllib.docx.docx_brief_synopsis import DocxBriefSynopsis
+from yw2oxmllib.docx.docx_export import DocxExport
+from yw2oxmllib.docx.docx_characters import DocxCharacters
+from yw2oxmllib.docx.docx_items import DocxItems
+from yw2oxmllib.docx.docx_locations import DocxLocations
 
 
 class Yw2msoExporter(YwCnvFf):

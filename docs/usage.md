@@ -1,4 +1,4 @@
-[Project homepage](https://peter88213.github.io/yw2mso)
+[Project homepage](https://peter88213.github.io/yw2oxml)
 
 ------------------------------------------------------------------
 
@@ -18,13 +18,13 @@ yWriter export to MS Office documents.
 
 # Instructions for use
 
-## How to install yw2mso
+## How to install yw2oxml
 
-1. If you have already installed an older version of yw2mso, please run the uninstaller for it. 
+1. If you have already installed an older version of yw2oxml, please run the uninstaller for it. 
 
-2. Unzip `yw2mso_<version number>.zip` within your user profile.
+2. Unzip `yw2oxml_<version number>.zip` within your user profile.
 
-3. Move into the `yw2mso_<version number>` folder and run `setup.pyw` (double click).
+3. Move into the `yw2oxml_<version number>` folder and run `setup.pyw` (double click).
    This will copy all needed files to the right places. 
    
 4. If everything works well, an Explorer window will open, showing the installation folder.
@@ -195,7 +195,7 @@ to yWriter format. File name suffix is `_items`.
 
 ## Installation path
 
-The setup script installs *yw2mso.pyw* in the user profile. This is the installation path on Windows: 
+The setup script installs *yw2oxml.pyw* in the user profile. This is the installation path on Windows: 
 
-`c:\Users\<user name>\.pywriter\yw2mso`
+`c:\Users\<user name>\.pywriter\yw2oxml`
 

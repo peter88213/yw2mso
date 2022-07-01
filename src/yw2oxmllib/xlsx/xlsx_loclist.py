@@ -1,10 +1,10 @@
 """Provide a class for XLSX location list export.
 
 Copyright (c) 2022 Peter Triesberger
-For further information see https://github.com/peter88213/yw2mso
+For further information see https://github.com/peter88213/yw2oxml
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from yw2msolib.xlsx.xlsx_file import XlsxFile
+from yw2oxmllib.xlsx.xlsx_file import XlsxFile
 
 
 class XlsxLocList(XlsxFile):

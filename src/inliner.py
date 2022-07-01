@@ -3,7 +3,7 @@
 In order to distribute single scripts without dependencies, 
 this script "inlines" all modules imported from the pywriter package.
 
-For further information see https://github.com/peter88213/yw2mso
+For further information see https://github.com/peter88213/yw2oxml
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import re

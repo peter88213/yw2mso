@@ -2,7 +2,7 @@
 
 Modules:
 
-yw2mso_exporter -- Provide a yWriter to MS Office converter.
+yw2oxml_exporter -- Provide a yWriter to MS Office converter.
 
 Copyright (c) 2022 Peter Triesberger
 For further information see https://github.com/peter88213/yw2OO

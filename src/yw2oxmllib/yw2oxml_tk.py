@@ -9,7 +9,7 @@ import tkinter as tk
 
 from pywriter.file.doc_open import open_document
 from pywriter.ui.main_tk import MainTk
-from yw2msolib.yw2mso_exporter import Yw2msoExporter
+from yw2oxmllib.yw2oxml_exporter import Yw2msoExporter
 
 
 class Yw2msoTk(MainTk):

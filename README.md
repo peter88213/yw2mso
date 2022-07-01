@@ -1,4 +1,4 @@
-# yw2mso -- yWriter to MS Office converter
+# yw2oxml - yWriter to Open XML converter
 
 This project is meant as a MS Office variant of the [yWriter to OpenOffice/LibreOffice standalone converter](https://peter88213.github.io/yW2OO/). 
 
@@ -8,9 +8,9 @@ For more information, see the [project homepage](https://peter88213.github.io/yw
 
 This is a work in progress. Contributions are welcome.
 
-The yw2mso script creates DOCX files, but formatting issues may still occur. 
+The yw2mso script creates *docx* files, but formatting issues may still occur. 
 
-To create proper XLSX documents, the following classes must be adapted first:
+To create proper *xlsx* documents, the following classes must be adapted first:
 
 - OxmlFile
 - XlsxFile
