@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### v0.6.3 Alpha
+
+docx export: Fix blanks around passages with different character formatting.
+
 ### v0.6.2 Alpha
 
 Fix footer/page numbering.

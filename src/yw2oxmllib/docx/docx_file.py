@@ -271,12 +271,12 @@ class DocxFile(OxmlFile):
             ('&', '&amp;'),
             ('>', '&gt;'),
             ('<', '&lt;'),
-            ('\n\n', (2 * '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyText"/></w:pPr><w:r><w:t>')),
-            ('\n', '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="FirstLineIndent"/></w:pPr><w:r><w:t>'),
+            ('\n\n', (2 * '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyText"/></w:pPr><w:r><w:t xml:space="preserve">')),
+            ('\n', '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="FirstLineIndent"/></w:pPr><w:r><w:t xml:space="preserve">'),
             ('\r', '\n'),
-            ('[i]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Emphasis"/></w:rPr><w:t>'),
+            ('[i]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Emphasis"/></w:rPr><w:t xml:space="preserve">'),
             ('[/i]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
-            ('[b]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Strongemphasis"/></w:rPr><w:t>'),
+            ('[b]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Strongemphasis"/></w:rPr><w:t xml:space="preserve">'),
             ('[/b]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
         ]
         YW_SPECIAL_CODES = ('HTM', 'TEX', 'RTF', 'epub', 'mobi', 'rtfimg', 'RTFBRK')
