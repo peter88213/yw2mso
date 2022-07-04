@@ -38,7 +38,7 @@ You can either
 
 #### Open a yWriter project
 
-- If no yWriter project is specified by dragging and dropping on the program icon, the latest project selected is preset. You can change it with **File > Open** or **Ctrl-o***.
+- If no yWriter project is specified by dragging and dropping on the program icon, the latest project selected is preset. You can change it with **File > Open** or **Ctrl-o**.
 
 #### Close the ywriter project
 
