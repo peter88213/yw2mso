@@ -64,11 +64,10 @@ text document (docx).
     as underline and strikethrough are lost.
 -   Only "normal" chapters and scenes are exported. Chapters and
     scenes marked "unused", "todo" or "notes" are not exported.
--   Only scenes that are intended for RTF export in yWriter will be
-    exported.
+-   Only scenes that are intended for RTF export in yWriter are exported.
 -   Comments in the text bracketed with slashes and asterisks (like
-    `/* this is a comment */`) are taken over unchanged.
--   Interspersed HTML, TEX, or RTF commands are taken over unchanged.
+    `/* this is a comment */`) are removed.
+-   Interspersed HTML, TEX, or RTF commands are removed.
 -   Gobal variables and project variables are not resolved.
 -   Chapter titles appear as first level heading if the chapter is
     marked as beginning of a new section in yWriter. Such headings are
@@ -76,8 +75,6 @@ text document (docx).
 -   Chapter titles appear as second level heading if the chapter is not
     marked as beginning of a new section. Such headings are considered
     as "chapter" headings.
--   Scene titles appear as navigable comments pinned to the beginning of
-    the scene.
 -   Usually, scenes are separated by three asterisks. The first line is not
     indented.
 -   Starting from the second paragraph, paragraphs begin with

@@ -273,7 +273,15 @@ class DocxFile(OxmlFile):
             ('/*', '/*'),
             ('*/', '*/'),
         ]
+        YW_SPECIAL_CODES = ('HTM', 'TEX', 'RTF', 'epub', 'mobi', 'rtfimg', 'RTFBRK')
         try:
+            # Remove comments.
+            text = re.sub('\/\*.+?\*\/', '', text)
+
+            # Remove inline code.
+            for specialCode in YW_SPECIAL_CODES:
+                text = re.sub(f'\<{specialCode} .+?\/{specialCode}\>', '', text)
+
             # process italics and bold markup reaching across linebreaks
             italics = False
             bold = False
@@ -302,12 +310,12 @@ class DocxFile(OxmlFile):
             text = '\n'.join(newlines).rstrip()
 
             # Process the replacements list.
-            for yw, od in DOCX_REPLACEMENTS:
-                text = text.replace(yw, od)
+            for yw, oxml in DOCX_REPLACEMENTS:
+                text = text.replace(yw, oxml)
 
             # Remove highlighting, alignment,
             # strikethrough, and underline tags.
             text = re.sub('\[\/*[h|c|r|s|u]\d*\]', '', text)
-        except AttributeError:
+        except:
             text = ''
         return text

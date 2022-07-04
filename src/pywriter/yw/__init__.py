@@ -3,7 +3,6 @@
 Modules:
 
 yw7_file -- Provide a class for yWriter 7 project import and export.
-data_files -- Provide a class for yWriter XML data files.
 xml_indent -- Helper module for xml pretty printing.
 
 Copyright (c) 2022 Peter Triesberger

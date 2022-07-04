@@ -1,6 +1,6 @@
-"""The pywriter library - Convert yWriter projects
+"""A subset of the pywriter library
 
-Version 5.12.0
+Version 5.12.5
 
 The system is based on the meta-model of a novel, which is also the basis of the yWriter novel writing 
 application: 
@@ -19,13 +19,8 @@ pywriter_globals -- Provide global variables to be imported.
 Packages:
 
 converter -- Modules for conversion of Novel subclasses.
-csv -- Modules for reading and writing csv spreadsheet documents.
 file -- Shared modules for template-based document generation.
-html -- Modules for reading html files.
 model -- Modules for representation of yWriter's meta model.
-odf -- Shared modules for writing Open Document files.
-ods -- Modules for writing Open Document spreadsheet documents.
-odt -- Modules for writing Open Document text documents.
 ui -- Modules for user interfaces.
 yw -- Modules for reading and writing yWriter project files.
 

@@ -4,11 +4,20 @@
 
 ## Changelog
 
-### v0.4.1
+### v0.6.0 Alpha
+
+Update the pywriter section to PyWriter v 5.12.5
+
+Improve conversion:
+- Remove comments when converting scenes.
+- Remove yWriter special codes when converting scenes.
+- Do not export scenes beginning with "<HTML>" or "<TEX>".
+
+### v0.4.1 Alpha
 
 Fix docx paragraph formatting.
 
-### v0.4.0
+### v0.4.0 Alpha
 
 Rename the Project from yw2mso to yw2oxml
 

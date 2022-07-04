@@ -10,9 +10,6 @@ export_source_factory -- Provide a factory class for any export source object.
 export_target_factory -- Provide a factory class for any export target object.
 import_source_factory -- Provide a factory class for any import source object.
 import_target_factory -- Provide a factory class for any import target object.
-new_project_factory -- Provide a factory class for source and target objects to create a new yWriter project.
-yw7_converter -- Provide a converter class for yWriter 7 universal import and export.
-yw7_exporter -- Provide a converter class for universal export from a yWriter 7 project.
 
 Copyright (c) 2022 Peter Triesberger
 For further information see https://github.com/peter88213/PyWriter
