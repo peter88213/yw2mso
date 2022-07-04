@@ -36,14 +36,10 @@ class OxmlFile(FileExport):
     <dc:title>$Title</dc:title>
 </cp:coreProperties>
 '''
-    _CUSTOM_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"></Properties>
-'''
     _RELS = '''<?xml version="1.0" encoding="UTF-8"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
     <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>
     <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
-    <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties" Target="docProps/custom.xml"/>
     <Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
 </Relationships>  
 '''
@@ -116,13 +112,6 @@ class OxmlFile(FileExport):
                 f.write(text)
         except:
             return f'{ERROR}Cannot write "core.xml".'
-
-        #--- Generate docProps/custom.xml.
-        try:
-            with open(f'{self._tempDir}/docProps/custom.xml', 'w', encoding='utf-8') as f:
-                f.write(self._CUSTOM_XML)
-        except:
-            return f'{ERROR}Cannot write "custom.xml"'
 
         #--- Generate _rels\.rels.
         try:

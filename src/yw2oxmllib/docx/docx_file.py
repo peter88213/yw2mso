@@ -22,8 +22,7 @@ class DocxFile(OxmlFile):
     EXTENSION = '.docx'
     # overwrites Novel.EXTENSION
 
-    _OXML_COMPONENTS = ['[Content_Types].xml', '_rels/.rels', 'docProps/app.xml', 'docProps/core.xml', 'docProps/custom.xml',
-                      'word/_rels/document.xml.rels', 'word/styles.xml', 'word/document.xml', 'word/fontTable.xml', 'word/footer1.xml', 'word/settings.xml', ]
+    _OXML_COMPONENTS = ['[Content_Types].xml', '_rels/.rels', 'docProps/app.xml', 'docProps/core.xml', 'word/_rels/document.xml.rels', 'word/styles.xml', 'word/document.xml', 'word/fontTable.xml', 'word/footer1.xml', 'word/settings.xml', ]
 
     _CONTENT_TYPES_XML = '''<?xml version="1.0" encoding="UTF-8"?>
 <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
@@ -52,7 +51,7 @@ class DocxFile(OxmlFile):
     <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/>
     <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable" Target="fontTable.xml"/>
     <Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/>
-</Relationships>
+    <Relationship Id="rId7" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/></Relationships>
 '''
     _STYLES_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="w14">
@@ -116,7 +115,14 @@ class DocxFile(OxmlFile):
 <w:body>
 '''
 
-    _DOCUMENT_XML_FOOTER = '''</w:body></w:document>
+    _DOCUMENT_XML_FOOTER = '''<w:sectPr w:rsidR="005C14FC" w:rsidSect="005C14FC">
+    <w:footerReference w:type="default" r:id="rId7"/>
+    <w:pgSz w:w="11906" w:h="16838"/>
+    <w:pgMar w:top="1814" w:right="1701" w:bottom="2380" w:left="1531" w:header="720" w:footer="1417" w:gutter="0"/>
+    <w:cols w:space="0"/>
+    </w:sectPr>
+    </w:body>
+    </w:document>
 '''
 
     _FONT_TABLE_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -129,36 +135,38 @@ class DocxFile(OxmlFile):
 <w:font w:name="Consolas"><w:charset w:val="01"/><w:family w:val="auto"/><w:pitch w:val="default"/></w:font></w:fonts>
 '''
     _FOOTER1_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:ftr xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" mc:Ignorable="w14 wp14">
-    <w:p>
-        <w:pPr><w:pStyle w:val="Footer"/>
-        <w:rPr></w:rPr></w:pPr>
-        <w:r>
-            <w:rPr></w:rPr>
-            <w:fldChar w:fldCharType="begin"></w:fldChar>
-        </w:r>
-        <w:r>
-            <w:rPr></w:rPr>
-            <w:instrText> PAGE </w:instrText>
-        </w:r>
-        <w:r>
-            <w:rPr></w:rPr>
-            <w:fldChar w:fldCharType="separate"/>
-        </w:r>
-        <w:r>
-            <w:rPr></w:rPr>
-            <w:t>14</w:t>
-        </w:r>
-        <w:r>
-            <w:rPr></w:rPr>
-            <w:fldChar w:fldCharType="end"/>
-        </w:r>
+<w:ftr xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml">
+    <w:p w:rsidR="005C14FC" w:rsidRDefault="005C14FC">
+        <w:pPr>
+            <w:pStyle w:val="Footer"/>
+        </w:pPr>
+        <w:fldSimple w:instr=" PAGE ">
+            <w:r w:rsidR="00AA5003">
+                <w:rPr><w:noProof/></w:rPr>
+                <w:t>10</w:t>
+            </w:r>
+        </w:fldSimple>
     </w:p>
 </w:ftr>
 '''
 
     _SETTINGS_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:zoom w:percent="100"/><w:defaultTabStop w:val="709"/><w:autoHyphenation w:val="true"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat><w:themeFontLang w:val="" w:eastAsia="" w:bidi=""/></w:settings>'''
+<w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+    <w:zoom w:percent="100"/>
+    <w:defaultTabStop w:val="709"/>
+    <w:autoHyphenation w:val="true"/>
+    <w:compat>
+        <w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/>
+    </w:compat>
+    <w:rsids>
+    <w:rsidRoot w:val="005C14FC"/>
+        <w:rsid w:val="00331309"/>
+        <w:rsid w:val="005C14FC"/>
+        <w:rsid w:val="00AA5003"/>
+    </w:rsids>
+    <w:themeFontLang w:val="" w:eastAsia="" w:bidi=""/>
+</w:settings>
+'''
 
     def _set_up(self):
         """Helper method for ZIP file generation.

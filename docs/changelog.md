@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### v0.6.2 Alpha
+
+Fix footer/page numbering.
+
 ### v0.6.1 Alpha
 
 - Update docstrings.
