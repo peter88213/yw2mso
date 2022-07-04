@@ -14,7 +14,7 @@
 -   [Item descriptions](#item-descriptions)
 
 
-yWriter export to MS Office documents. 
+yWriter export to Open XML documents. 
 
 # Instructions for use
 
