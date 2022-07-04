@@ -267,26 +267,14 @@ class DocxFile(OxmlFile):
             except AttributeError:
                 return ''
 
-        DOCX_REPLACEMENTS = [
-            ('&', '&amp;'),
-            ('>', '&gt;'),
-            ('<', '&lt;'),
-            ('\n\n', (2 * '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyText"/></w:pPr><w:r><w:t xml:space="preserve">')),
-            ('\n', '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="FirstLineIndent"/></w:pPr><w:r><w:t xml:space="preserve">'),
-            ('\r', '\n'),
-            ('[i]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Emphasis"/></w:rPr><w:t xml:space="preserve">'),
-            ('[/i]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
-            ('[b]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Strongemphasis"/></w:rPr><w:t xml:space="preserve">'),
-            ('[/b]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
-        ]
-        YW_SPECIAL_CODES = ('HTM', 'TEX', 'RTF', 'epub', 'mobi', 'rtfimg', 'RTFBRK')
-        try:
-            # Remove comments.
-            text = re.sub('\/\*.+?\*\/', '', text)
-
+        if text:
             # Remove inline code.
+            YW_SPECIAL_CODES = ('HTM', 'TEX', 'RTF', 'epub', 'mobi', 'rtfimg', 'RTFBRK')
             for specialCode in YW_SPECIAL_CODES:
                 text = re.sub(f'\<{specialCode} .+?\/{specialCode}\>', '', text)
+
+            # Remove comments.
+            text = re.sub('\/\*.+?\*\/', '', text)
 
             # process italics and bold markup reaching across linebreaks
             italics = False
@@ -315,13 +303,25 @@ class DocxFile(OxmlFile):
                 newlines.append(line)
             text = '\n'.join(newlines).rstrip()
 
-            # Process the replacements list.
+            # Apply docx formatting.
+            DOCX_REPLACEMENTS = [
+                ('&', '&amp;'),
+                ('>', '&gt;'),
+                ('<', '&lt;'),
+                ('\n\n', (2 * '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyText"/></w:pPr><w:r><w:t xml:space="preserve">')),
+                ('\n', '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="FirstLineIndent"/></w:pPr><w:r><w:t xml:space="preserve">'),
+                ('\r', '\n'),
+                ('[i]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Emphasis"/></w:rPr><w:t xml:space="preserve">'),
+                ('[/i]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
+                ('[b]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Strongemphasis"/></w:rPr><w:t xml:space="preserve">'),
+                ('[/b]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
+            ]
             for yw, oxml in DOCX_REPLACEMENTS:
                 text = text.replace(yw, oxml)
 
             # Remove highlighting, alignment,
             # strikethrough, and underline tags.
             text = re.sub('\[\/*[h|c|r|s|u]\d*\]', '', text)
-        except:
+        else:
             text = ''
         return text
