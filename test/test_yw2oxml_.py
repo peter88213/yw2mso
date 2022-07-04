@@ -66,17 +66,16 @@ class NormalOperation(unittest.TestCase):
         except:
             pass
         remove_all_testfiles()
+        self.exporter = Yw2msoExporter()
+        self.exporter.ui = UiStub()
 
     def test_yw7_to_nw(self):
         copyfile(f'{TEST_DATA_PATH}{YW7_NORMAL}', f'{TEST_EXEC_PATH}{PROJECT}.yw7')
         os.chdir(TEST_EXEC_PATH)
-        exporter = Yw2msoExporter()
-        exporter.ui = UiStub()
         kwargs = {'suffix': ''}
-        exporter.run(f'{TEST_EXEC_PATH}{PROJECT}.yw7', **kwargs)
+        self.exporter.run(f'{TEST_EXEC_PATH}{PROJECT}.yw7', **kwargs)
         with zipfile.ZipFile(f'{TEST_EXEC_PATH}{PROJECT}.docx', 'r') as myzip:
             myzip.extract(f'word/{DOCUMENT}', TEST_EXEC_PATH)
-            myzip.close
         self.assertEqual(read_file(f'word/{DOCUMENT}'), read_file(f'{TEST_DATA_PATH}{DOCUMENT_NORMAL_EXPORT}'))
 
     def tearDown(self):
