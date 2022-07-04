@@ -2,7 +2,7 @@
 
 
 
-[yWriter](http://spacejock.com/yWriter7.html) is a free word processor written by Australian author and programmer Simon Haynes. yWriter's strengths are structuring novels and controlling the progress during the writing process. Use this Python script to generate your manuscript and various reports in Open XML *docx* format.
+[yWriter](http://spacejock.com/yWriter7.html) is a free word processor written by Australian author and programmer Simon Haynes. yWriter's strengths are structuring novels and controlling the progress during the writing process. Use this Python script to generate your manuscript and various reports in Open XML *docx* format with paragraph and charcter styles.
 
 
 ## Features (a Python 3 installation is required)
@@ -16,6 +16,8 @@
 
 - Windows.
 - [Python 3.6+](https://www.python.org).  
+
+*Please note:* If you use LibreOffice, you may prefer the [LibreOffice yWriter import extension](https://peter88213.github.io/yw-cnv) or the [yW2OO standalone converter](https://peter88213.github.io/yW2OO).
 
 ## Download and install
 
