@@ -18,7 +18,7 @@ Combining relentless action with non-stop laughs, Hal Spacejock explodes onto th
 		<FieldTitle2><![CDATA[Tension]]></FieldTitle2>
 		<FieldTitle3><![CDATA[Humour]]></FieldTitle3>
 		<FieldTitle4><![CDATA[Quality]]></FieldTitle4>
-		<LastFullBackup>2021-04-29</LastFullBackup>
+		<LastFullBackup>2022-07-04</LastFullBackup>
 		<WordTarget>0</WordTarget>
 		<WordTargetStartDate>2007-07-28</WordTargetStartDate>
 		<WordTargetEndDate>2007-08-27</WordTargetEndDate>
@@ -35,7 +35,7 @@ Combining relentless action with non-stop laughs, Hal Spacejock explodes onto th
 		<LaTeXHeaderFile><![CDATA[ ]]></LaTeXHeaderFile>
 		<MRUSpecificDate>1899-12-30</MRUSpecificDate>
 		<MRUSpecificTime>00:00:00</MRUSpecificTime>
-		<LastViewedScID>1</LastViewedScID>
+		<LastViewedScID>3</LastViewedScID>
 		<DeadlineDate1>2004-09-01</DeadlineDate1>
 		<DeadlineDate2>2004-12-14</DeadlineDate2>
 		<DeadlineDate3>2004-12-20</DeadlineDate3>
@@ -219,8 +219,8 @@ After Vurdi leaves, Hal discusses things with the Black Gull's onboard computer 
 		<Field3>3</Field3>
 		<Field4>3</Field4>
 		<Status>4</Status>
-		<WordCount>376</WordCount>
-		<LetterCount>2229</LetterCount>
+		<WordCount>378</WordCount>
+		<LetterCount>2244</LetterCount>
 		<Characters>
 			<CharID>1</CharID>
 			<CharID>10</CharID>
@@ -233,7 +233,7 @@ After Vurdi leaves, Hal discusses things with the Black Gull's onboard computer 
 		</Locations>
 		<Items>
 		</Items>
-		<SceneContent><![CDATA[[b]Hal Spacejock[/b] was sitting at the [i]Black Gull's[/i] flight console, his attention riveted to a small chessboard balanced amongst the toggle switches, flashing lights and status displays. a few weeks earlier he'd read an article extolling the benefits of the ancient game: how playing it would sharpen his mind, improve his memory and increase his attraction to the opposite sex. Chess had been an important part of his daily routine ever since, but after two hundred and seventy-six losses in a row Hal was beginning to doubt the article's claims. He didn't feel any smarter and he couldn't remember the last time he'd spoken to a member of the opposite sex, let alone had one attracted to him. Briefly, he wondered whether it had been such a clever idea to play against the Navcom, the Black Gull's onboard computer. Underpowered and outdated, it was still more than capable of running the ship's accounts, navigation and life support systems while beating humans at simple board games. However, since Hal was the only human aboard the Black Gull, his choice of opponents was limited.
+		<SceneContent><![CDATA[[b]Hal Spacejock[/b] was sitting at the [i]Black Gull's[/i] flight console, his attention riveted to a <HTM <br> /HTM>small chessboard balanced amongst the toggle switches, flashing lights and status displays. a few weeks earlier he'd read an article extolling the benefits of the ancient game: how playing it would sharpen his mind, improve his memory and increase his attraction to the opposite sex. Chess had been an important part of his daily routine ever since, but after two hundred and seventy-six losses in a row Hal was beginning to doubt the article's claims. He didn't feel any smarter and he couldn't remember the last time he'd spoken to a member of the opposite sex, let alone had one attracted to him. Briefly, he wondered whether it had been such a clever idea to play against the Navcom, the Black Gull's onboard computer. Underpowered and outdated, it was still more than capable of running the ship's accounts, navigation and life support systems while beating humans at simple board games. However, since Hal was the only human aboard the Black Gull, his choice of opponents was limited.
 "Your turn," said the Navcom, in a neutral female voice.
 "I'm thinking."
 "While you're planning your opening move, can I tell you about a special offer?"
@@ -262,6 +262,10 @@ Jerling catches up on a few minor business matters. He reluctantly approves the 
 He examines the Seraph file. There's a shipment of robot parts ordered and paid for, but the source planet (Seraph IV) is in the middle of war games and the massed ships of the Seraph Space Corps have already shot down three unarmed freighters by mistake. The parts are needed urgently by Jerling's assembly line, they're putting together a last-minute order of robots for the Emperor's summer palace. Late delivery isn't an option.
 Carina explains that they can't risk their own ships, they wouldn't be covered by insurance and anyway, none of their pilots will fly into the danger zone. They tried to hire a freelancer but none of them wanted the job either - they were all warned off by a Spacers Guild bulletin. Jerling asks why they didn't try non-Guild pilots, Carina explains that they could only locate one and he turned it down because he was convinced it was a stolen goods racket. Jerling is annoyed that his staff hid the problem from him. Carina explains that they didn't want to worry him.  Jerling says they should have come to him before, this is important, if they lose preferred supplier status his business is at risk, and worse still the Hinchfigs will gain on him.
 Jerling asks Carina to call the idiot, the one who thought it was stolen goods. Before the assistant makes the call, she discovers that there's a message from the 'idiot' already - he wants the job. Carina tries to pursuade Jerling that others can deal with the issue but Jerling's fired up and won't let go, it's his pet project.]]></Desc>
+		<Fields>
+			<Field_UseExporterTags>0</Field_UseExporterTags>
+		</Fields>
+
 		<BelongsToChID>2</BelongsToChID>
 		<Field1>4</Field1>
 		<Field2>1</Field2>
@@ -269,7 +273,7 @@ Jerling asks Carina to call the idiot, the one who thought it was stolen goods. 
 		<Field4>2</Field4>
 		<Status>4</Status>
 		<WordCount>67</WordCount>
-		<LetterCount>387</LetterCount>
+		<LetterCount>391</LetterCount>
 		<Characters>
 			<CharID>2</CharID>
 			<CharID>7</CharID>
@@ -280,8 +284,9 @@ Jerling asks Carina to call the idiot, the one who thought it was stolen goods. 
 		</Locations>
 		<Items>
 		</Items>
-		<SceneContent><![CDATA[On planet Forg, a small crowd had gathered outside the local sky hockey stadium. South Forgberg was not a prosperous area - the semi-detached houses were modest and the residents faced a constant struggle to live within their means. It was unusual to see building work or renovations, so the extensive refurbishment to the decrepit old stadium had been a talking point for months.
-. . .]]></SceneContent>
+		<SceneContent><![CDATA[<TEX>On planet Forg, a small crowd had gathered outside the local sky hockey stadium. South Forgberg was not a prosperous area - the semi-detached houses were modest and the residents faced a constant struggle to live within their means. It was unusual to see building work or renovations, so the extensive refurbishment to the decrepit old stadium had been a talking point for months.
+. . .
+]]></SceneContent>
 	</SCENE>
 
 	<SCENE>
@@ -289,6 +294,10 @@ Jerling asks Carina to call the idiot, the one who thought it was stolen goods. 
 		<Title><![CDATA[Hal takes a call from Jerling]]></Title>
 		<Desc><![CDATA[Back with Hal, Jerling's call comes through and the businessman explains about his cargo, reassures Hal it's not stolen goods, then explains he has a pilot at the Lamira Spaceport (the same location as Hal) who needs a lift to Seraph IV. If Hal can take him, the pilot will return the favour by landing Hal's ship when they arrive at the destination.
 Hal says he doesn't need help, Jerling explains that the landing is at night, with no guidance. This makes Hal suspicious about the job again, but he decides that nothing could be worse than another session with Brutus. Jerling reassures him that the pilot can handle everything and reminds him that delivery is to his premises on Forg. Hal agrees to the job, starts to ask for an advance but Jerling disconnects.]]></Desc>
+		<Fields>
+			<Field_UseExporterTags>0</Field_UseExporterTags>
+		</Fields>
+
 		<BelongsToChID>2</BelongsToChID>
 		<Field1>1</Field1>
 		<Field2>1</Field2>
@@ -296,7 +305,7 @@ Hal says he doesn't need help, Jerling explains that the landing is at night, wi
 		<Field4>3</Field4>
 		<Status>4</Status>
 		<WordCount>88</WordCount>
-		<LetterCount>489</LetterCount>
+		<LetterCount>488</LetterCount>
 		<Characters>
 			<CharID>1</CharID>
 			<CharID>10</CharID>
@@ -307,14 +316,15 @@ Hal says he doesn't need help, Jerling explains that the landing is at night, wi
 		</Locations>
 		<Items>
 		</Items>
-		<SceneContent><![CDATA[Hal was pacing the Black Gull's flight deck, ready to put his fist through the nearest wall. "What do you mean, you can't call Jerling back? What do you mean you didn't save his details?"
+		<SceneContent><![CDATA[<HTML>Hal was pacing the Black Gull's flight deck, ready to put his fist through the nearest wall. "What do you mean, you can't call Jerling back? What do you mean you didn't save his details?"
 "I erased the record after you turned the job down."
 "So look it up again!"
 "Negative, we can't afford the search fees." The Navcom hesitated. "Incidentally, it's your move."
 "How can you think of a bloody chess game at a time like this?"
 "You're only saying that because you're losing."
 
-. . .]]></SceneContent>
+. . .
+]]></SceneContent>
 	</SCENE>
 
 	<SCENE>
@@ -363,7 +373,7 @@ Hal drives off, oblivious to the flames starting to flicker around the fallen ro
 		<Field4>1</Field4>
 		<Status>4</Status>
 		<WordCount>177</WordCount>
-		<LetterCount>1050</LetterCount>
+		<LetterCount>1048</LetterCount>
 		<Characters>
 			<CharID>1</CharID>
 		</Characters>
@@ -619,8 +629,8 @@ Clunk's batteries are failing, and he can't hang on much longer.]]></Desc>
 		<Field3>1</Field3>
 		<Field4>1</Field4>
 		<Status>4</Status>
-		<WordCount>0</WordCount>
-		<LetterCount>0</LetterCount>
+		<WordCount>1</WordCount>
+		<LetterCount>7</LetterCount>
 		<Characters>
 			<CharID>5</CharID>
 		</Characters>
@@ -628,7 +638,7 @@ Clunk's batteries are failing, and he can't hang on much longer.]]></Desc>
 		</Locations>
 		<Items>
 		</Items>
-		<SceneContent><![CDATA[]]></SceneContent>
+		<SceneContent><![CDATA[one—two]]></SceneContent>
 	</SCENE>
 
 	<SCENE>
@@ -1549,8 +1559,8 @@ Clunk's batteries are failing, and he can't hang on much longer.]]></Desc>
 		<Field3>1</Field3>
 		<Field4>1</Field4>
 		<Status>1</Status>
-		<WordCount>64</WordCount>
-		<LetterCount>458</LetterCount>
+		<WordCount>66</WordCount>
+		<LetterCount>462</LetterCount>
 		<Characters>
 			<CharID>1</CharID>
 		</Characters>
@@ -2058,6 +2068,18 @@ Any new projects created with yWriter5 will not be deleted, overwritten or modif
 		<Date>2021-04-29</Date>
 		<Count>1254</Count>
 		<TotalCount>1329</TotalCount>
+	</WC>
+
+	<WC>
+		<Date>2022-07-01</Date>
+		<Count>1255</Count>
+		<TotalCount>1332</TotalCount>
+	</WC>
+
+	<WC>
+		<Date>2022-07-04</Date>
+		<Count>1257</Count>
+		<TotalCount>1334</TotalCount>
 	</WC>
 
 	</WCLog>
