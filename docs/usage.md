@@ -27,13 +27,12 @@ yWriter export to MS Office documents.
 3. Move into the `yw2oxml_<version number>` folder and run `setup.pyw` (double click).
    This will copy all needed files to the right places. 
    
-4. If everything works well, an Explorer window will open, showing the installation folder.
-   Now, add the context menu entries by double-clicking  `add_context_menu.reg`. 
-   You may be asked for approval to modify  the Windows registry. Please accept.
+The included installation script prompts you to create a shortcut on the desktop. 
 
-You can remove the context menu entries by double-clicking  `rem_context_menu.reg`.
+You can either
 
-Please note that these context menus depend on the currently installed Python version. After a major Python update you may need to run the setup program again and renew the registry entries.
+- launch the program by double-clicking on the program/link icon, or
+- launch the program by dragging a yWriter project file and dropping it on the program/link icon.
 
 ### Operation
 
