@@ -6,7 +6,7 @@ For more information, see the [project homepage](https://peter88213.github.io/yw
 
 ## Important
 
-This is a work in progress. Contributions are welcome.
+Please note that the program has not yet been extensively tested. To me, it's actually just a proof of concept. I probably won't develop the program further. Feel free to copy the project and modify it to your own liking.
 
 The yw2oxml script creates *docx* files, but formatting issues may still occur. 
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """"Provide a tkinter GUI framework for yWriter docx/xlsx export.
 
 Copyright (c) 2022 Peter Triesberger

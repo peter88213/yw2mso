@@ -270,8 +270,6 @@ class DocxFile(OxmlFile):
             ('[/i]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
             ('[b]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Strongemphasis"/></w:rPr><w:t>'),
             ('[/b]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
-            ('/*', '/*'),
-            ('*/', '*/'),
         ]
         YW_SPECIAL_CODES = ('HTM', 'TEX', 'RTF', 'epub', 'mobi', 'rtfimg', 'RTFBRK')
         try:

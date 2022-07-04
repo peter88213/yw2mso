@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### v0.6.1 Alpha
+
+- Update docstrings.
+- Remove dead code.
+
 ### v0.6.0 Alpha
 
 Update the pywriter section to PyWriter v 5.12.5
