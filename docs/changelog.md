@@ -29,7 +29,7 @@ Update the pywriter section to PyWriterv 5.12.5
 Improve conversion:
 - Remove comments when converting scenes.
 - Remove yWriter special codes when converting scenes.
-- Do not export scenes beginning with "<HTML>" or "<TEX>".
+- Do not export scenes beginning with `<HTML>` or `<TEX>`.
 
 ### v0.4.1 Alpha
 
