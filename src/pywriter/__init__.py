@@ -1,6 +1,6 @@
 """A subset of the pywriter library
 
-Version 5.12.5
+Version v5.16.1
 
 The system is based on the meta-model of a novel, which is also the basis of the yWriter novel writing 
 application: 

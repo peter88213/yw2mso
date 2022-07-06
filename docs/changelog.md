@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### v0.6.4 Alpha
+
+- Fix and refactor inline code removal.
+- Update the pywriter section to PyWriter v5.16.1
+
 ### v0.6.3 Alpha
 
 docx export: Fix blanks around passages with different character formatting.
@@ -19,7 +24,7 @@ Fix footer/page numbering.
 
 ### v0.6.0 Alpha
 
-Update the pywriter section to PyWriter v 5.12.5
+Update the pywriter section to PyWriterv 5.12.5
 
 Improve conversion:
 - Remove comments when converting scenes.
