@@ -4,6 +4,12 @@
 
 ## Changelog
 
+### v0.6.5 Improved setup
+
+- Catch exceptions in the setup script.
+
+Based on PyWriter v5.18.0
+
 ### v0.6.4 Alpha
 
 - Fix and refactor inline code removal.
