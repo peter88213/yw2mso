@@ -16,7 +16,7 @@ from yw2oxmllib.yw2oxml_tk import Yw2msoTk
 APPNAME = 'yw2oxml'
 SETTINGS = dict(
     yw_last_open='',
-    root_geometry='600x100',
+    root_geometry='600x140',
 )
 OPTIONS = {}
 

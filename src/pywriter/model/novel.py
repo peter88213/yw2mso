@@ -8,7 +8,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 from urllib.parse import quote
 import os
-from pywriter.pywriter_globals import ERROR
+from pywriter.pywriter_globals import *
 from pywriter.model.chapter import Chapter
 from pywriter.model.scene import Scene
 from pywriter.model.character import Character
@@ -45,9 +45,11 @@ class Novel:
         srtItems -- list: the novel's sorted item IDs.
         characters -- dict: (key: ID, value: character instance).
         srtCharacters -- list: the novel's sorted character IDs.
+        projectName -- str: URL-coded file name without suffix and extension. 
+        projectPath -- str: URL-coded path to the project directory. 
         filePath -- str: path to the file (property with getter and setter). 
     """
-    DESCRIPTION = 'Novel'
+    DESCRIPTION = _('Novel')
     EXTENSION = None
     SUFFIX = None
     # To be extended by subclass methods.
@@ -150,11 +152,11 @@ class Novel:
         # str
         # Path to the file. The setter only accepts files of a supported type as specified by EXTENSION.
 
-        self._projectName = None
+        self.projectName = None
         # str
         # URL-coded file name without suffix and extension.
 
-        self._projectPath = None
+        self.projectPath = None
         # str
         # URL-coded path to the project directory.
 
@@ -220,7 +222,7 @@ class Novel:
         
         This is a stub to be overridden by subclass methods.
         """
-        return text
+        return text.rstrip()
 
     def _convert_from_yw(self, text, quick=False):
         """Return text, converted from yw7 markup to target format.
@@ -233,4 +235,4 @@ class Novel:
         
         This is a stub to be overridden by subclass methods.
         """
-        return text
+        return text.rstrip()

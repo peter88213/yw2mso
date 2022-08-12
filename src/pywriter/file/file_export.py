@@ -9,7 +9,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 import os
 import re
 from string import Template
-from pywriter.pywriter_globals import ERROR
+from pywriter.pywriter_globals import *
 from pywriter.model.character import Character
 from pywriter.model.scene import Scene
 from pywriter.model.novel import Novel
@@ -30,6 +30,7 @@ class FileExport(Novel):
     _partTemplate = ''
     _chapterTemplate = ''
     _notesPartTemplate = ''
+    _todoPartTemplate = ''
     _notesChapterTemplate = ''
     _todoChapterTemplate = ''
     _unusedChapterTemplate = ''
@@ -566,8 +567,12 @@ class FileExport(Novel):
             if sceneCount > 0 and notExportCount == sceneCount:
                 doNotExport = True
             if self.chapters[chId].chType == 2:
-                # Chapter is "ToDo" type (implies "unused").
-                if self._todoChapterTemplate:
+                # Chapter is "Todo" type (implies "unused").
+                if self.chapters[chId].chLevel == 1:
+                    # Chapter is "Todo Part" type.
+                    if self._todoPartTemplate:
+                        template = Template(self._todoPartTemplate)
+                elif self._todoChapterTemplate:
                     template = Template(self._todoChapterTemplate)
             elif self.chapters[chId].chType == 1:
                 # Chapter is "Notes" type (implies "unused").
@@ -709,7 +714,7 @@ class FileExport(Novel):
                 os.replace(self.filePath, f'{self.filePath}.bak')
                 backedUp = True
             except:
-                return f'{ERROR}Cannot overwrite "{os.path.normpath(self.filePath)}".'
+                return f'{ERROR}{_("Cannot overwrite file")}: "{os.path.normpath(self.filePath)}".'
 
         try:
             with open(self.filePath, 'w', encoding='utf-8') as f:
@@ -717,9 +722,9 @@ class FileExport(Novel):
         except:
             if backedUp:
                 os.replace(f'{self.filePath}.bak', self.filePath)
-            return f'{ERROR}Cannot write "{os.path.normpath(self.filePath)}".'
+            return f'{ERROR}{_("Cannot write file")}: "{os.path.normpath(self.filePath)}".'
 
-        return f'"{os.path.normpath(self.filePath)}" written.'
+        return f'{_("File written")}: "{os.path.normpath(self.filePath)}".'
 
     def _get_string(self, elements):
         """Join strings from a list.

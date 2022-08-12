@@ -5,7 +5,7 @@ For further information see https://github.com/peter88213/PyWriter
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
-from pywriter.pywriter_globals import ERROR
+from pywriter.pywriter_globals import *
 from pywriter.converter.file_factory import FileFactory
 
 
@@ -36,7 +36,13 @@ class ImportTargetFactory(FileFactory):
         fileName, __ = os.path.splitext(sourcePath)
         sourceSuffix = kwargs['suffix']
         if sourceSuffix:
-            ywPathBasis = fileName.split(sourceSuffix)[0]
+            # Remove the suffix from the source file name.
+            # This should also work if the file name already contains the suffix,
+            # e.g. "test_notes_notes.odt".
+            e = fileName.split(sourceSuffix)
+            if len(e) > 1:
+                e.pop()
+            ywPathBasis = ''.join(e)
         else:
             ywPathBasis = fileName
 
@@ -45,5 +51,5 @@ class ImportTargetFactory(FileFactory):
             if os.path.isfile(f'{ywPathBasis}{fileClass.EXTENSION}'):
                 targetFile = fileClass(f'{ywPathBasis}{fileClass.EXTENSION}', **kwargs)
                 return 'Target object created.', None, targetFile
-            
-        return f'{ERROR}No yWriter project to write.', None, None
+
+        return f'{ERROR}{_("No yWriter project to write")}.', None, None

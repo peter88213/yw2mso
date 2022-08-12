@@ -4,6 +4,7 @@ Copyright (c) 2022 Peter Triesberger
 For further information see https://github.com/peter88213/PyWriter
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
+from pywriter.pywriter_globals import *
 
 
 class Splitter:
@@ -35,6 +36,9 @@ class Splitter:
         
         Positional argument: 
             novel -- Novel instance to update.
+        
+        Return True if the sructure has changed, 
+        otherwise return False.        
         """
 
         def create_chapter(chapterId, title, desc, level):
@@ -63,7 +67,7 @@ class Splitter:
                 title -- str: title of the scene to create.
                 desc -- str: description of the scene to create.
             """
-            WARNING = ' (!) '
+            WARNING = '(!)'
 
             # Mark metadata of split scenes.
             newScene = novel.SCENE_CLASS()
@@ -76,7 +80,7 @@ class Splitter:
                     title = parent.title
                 newScene.title = f'{title} Split: {splitCount}'
             else:
-                newScene.title = f'New scene Split: {splitCount}'
+                newScene.title = f'_("New Scene") Split: {splitCount}'
             if desc:
                 newScene.desc = desc
             if parent.desc and not parent.desc.startswith(WARNING):
@@ -116,6 +120,7 @@ class Splitter:
                 scIdMax = int(scId)
 
         # Process chapters and scenes.
+        scenesSplit = False
         srtChapters = []
         for chId in novel.srtChapters:
             srtChapters.append(chId)
@@ -149,6 +154,7 @@ class Splitter:
                         sceneId = str(scIdMax)
                         create_scene(sceneId, novel.scenes[scId], sceneSplitCount, title, desc)
                         srtScenes.append(sceneId)
+                        scenesSplit = True
                         inScene = True
                     elif line.startswith(self.CHAPTER_SEPARATOR):
                         # Start a new chapter.
@@ -162,9 +168,10 @@ class Splitter:
                         chIdMax += 1
                         chapterId = str(chIdMax)
                         if not title:
-                            title = 'New chapter'
+                            title = _('New Chapter')
                         create_chapter(chapterId, title, desc, 0)
                         srtChapters.append(chapterId)
+                        scenesSplit = True
                     elif line.startswith(self.PART_SEPARATOR):
                         # start a new part.
                         if inScene:
@@ -177,7 +184,7 @@ class Splitter:
                         chIdMax += 1
                         chapterId = str(chIdMax)
                         if not title:
-                            title = 'New part'
+                            title = _('New Part')
                         create_chapter(chapterId, title, desc, 1)
                         srtChapters.append(chapterId)
                     elif not inScene:
@@ -188,9 +195,11 @@ class Splitter:
                         sceneId = str(scIdMax)
                         create_scene(sceneId, novel.scenes[scId], sceneSplitCount, '', '')
                         srtScenes.append(sceneId)
+                        scenesSplit = True
                         inScene = True
                     else:
                         newLines.append(line)
                 novel.scenes[sceneId].sceneContent = '\n'.join(newLines)
             novel.chapters[chapterId].srtScenes = srtScenes
         novel.srtChapters = srtChapters
+        return scenesSplit

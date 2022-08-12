@@ -10,7 +10,7 @@ import os
 import re
 from html import unescape
 import xml.etree.ElementTree as ET
-from pywriter.pywriter_globals import ERROR
+from pywriter.pywriter_globals import *
 from pywriter.model.novel import Novel
 from pywriter.model.splitter import Splitter
 from pywriter.yw.xml_indent import indent
@@ -28,8 +28,9 @@ class Yw7File(Novel):
 
     Public instance variables:
         tree -- xml element tree of the yWriter project
+        scenesSplit -- bool: True, if a scene or chapter is split during merging.
     """
-    DESCRIPTION = 'yWriter 7 project'
+    DESCRIPTION = _('yWriter 7 project')
     EXTENSION = '.yw7'
     _CDATA_TAGS = ['Title', 'AuthorName', 'Bio', 'Desc',
                    'FieldTitle1', 'FieldTitle2', 'FieldTitle3',
@@ -61,6 +62,7 @@ class Yw7File(Novel):
         """
         super().__init__(filePath)
         self.tree = None
+        self.scenesSplit = False
 
         #--- Initialize custom keyword variables.
         for field in self._PRJ_KWVAR:
@@ -73,11 +75,11 @@ class Yw7File(Novel):
         Overrides the superclass method.
         """
         if self.is_locked():
-            return f'{ERROR}yWriter seems to be open. Please close first.'
+            return f'{ERROR}{_("yWriter seems to be open. Please close first")}.'
         try:
             self.tree = ET.parse(self.filePath)
         except:
-            return f'{ERROR}Can not process "{os.path.normpath(self.filePath)}".'
+            return f'{ERROR}{_("Can not process file")}: "{os.path.normpath(self.filePath)}".'
 
         root = self.tree.getroot()
 
@@ -810,7 +812,7 @@ class Yw7File(Novel):
         # in order to avoid creating duplicate IDs.
         if sourceHasSceneContent:
             sceneSplitter = Splitter()
-            sceneSplitter.split_scenes(self)
+            self.scenesSplit = sceneSplitter.split_scenes(self)
         return 'yWriter project data updated or created.'
 
     def write(self):
@@ -822,7 +824,7 @@ class Yw7File(Novel):
         Overrides the superclass method.
         """
         if self.is_locked():
-            return f'{ERROR}yWriter seems to be open. Please close first.'
+            return f'{ERROR}{_("yWriter seems to be open. Please close first")}.'
 
         self._build_element_tree()
         message = self._write_element_tree(self)
@@ -1298,7 +1300,7 @@ class Yw7File(Novel):
             if prjCrt.isMajor:
                 ET.SubElement(xmlCrt, 'Major').text = '-1'
 
-             #--- Write character custom fields.
+            #--- Write character custom fields.
             crFields = xmlCrt.find('Fields')
             for field in self._CRT_KWVAR:
                 if field in self.characters[crId].kwVar and self.characters[crId].kwVar[field]:
@@ -1519,7 +1521,7 @@ class Yw7File(Novel):
         except:
             if backedUp:
                 os.replace(f'{ywProject.filePath}.bak', ywProject.filePath)
-            return f'{ERROR}Cannot write "{os.path.normpath(ywProject.filePath)}".'
+            return f'{ERROR}{_("Cannot write file")}: "{os.path.normpath(ywProject.filePath)}".'
 
         return 'yWriter XML tree written.'
 
@@ -1553,9 +1555,9 @@ class Yw7File(Novel):
             with open(filePath, 'w', encoding='utf-8') as f:
                 f.write(text)
         except:
-            return f'{ERROR}Can not write "{os.path.normpath(filePath)}".'
+            return f'{ERROR}{_("Cannot write file")}: "{os.path.normpath(filePath)}".'
 
-        return f'"{os.path.normpath(filePath)}" written.'
+        return f'{_("File written")}: "{os.path.normpath(filePath)}".'
 
     def _strip_spaces(self, lines):
         """Local helper method.
