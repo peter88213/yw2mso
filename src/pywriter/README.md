@@ -1,3 +1,7 @@
-This is a subset of the [PyWriter](https://github.com/peter88213/PyWriter) library. It contains all modules needed for the *yw2oxml* converter. 
+# This directory contains a subset of the PyWriter library
 
-It is advised not to modify modules from this section, but to create modified subclasses if needed and place them in the yw2oxmllib section.
+Version v5.22.0
+
+This is a subset of the [PyWriter](https://github.com/peter88213/PyWriter) library. It contains all modules needed for this application. 
+
+It is advised not to modify modules from this section, but to create modified subclasses if needed and place them in the yw2oxmllib package.
