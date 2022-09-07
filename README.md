@@ -8,7 +8,13 @@ For more information, see the [project homepage](https://peter88213.github.io/yw
 
 Please note that the program has not yet been extensively tested. To me, it's actually just a proof of concept. I probably won't develop the program further. Feel free to copy the project and modify it to your own liking.
 
-The yw2oxml script creates *docx* files, but formatting issues may still occur. 
+### DOCX text document export
+
+The yw2oxml script creates *docx* files, formatted in a "standard manuscript pages" layout. 
+
+### XSLX spreadsheet export (not fully implemented)
+
+In principle, it is also possible to export spreadsheets, such as scene lists or character lists. For this purpose there are some modules in the subdirectory `src\yw2oxmllib\xlsx`, which create XLSX table files according to the name, but still contain the code for OpenDocument ODS inside. 
 
 To create proper *xlsx* documents, the following classes must be adapted first:
 
@@ -33,4 +39,4 @@ To create proper *xlsx* documents, the following classes must be adapted first:
 
 ## License
 
-yW2mso is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+yW2oxml is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
