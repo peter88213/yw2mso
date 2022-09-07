@@ -52,7 +52,7 @@ class Yw2msoTk(MainTk):
         self._exportMenu = tk.Menu(self.mainMenu, tearoff=0)
         self.mainMenu.add_cascade(label=_('Export'), menu=self._exportMenu)
         self.mainMenu.entryconfig('Export', state='disabled')
-        self._exportMenu.add_command(label=_('Export to odt'),
+        self._exportMenu.add_command(label=_('Export to docx'),
                                         command=lambda: self._export_document(''))
         self._exportMenu.add_command(label=_('Brief synopsis'),
                                         command=lambda: self._export_document('_brf_synopsis'))
@@ -71,7 +71,7 @@ class Yw2msoTk(MainTk):
         self.root._openButton = tk.Button(text=_('Open exported document'), state=tk.DISABLED, command=self._open_newFile)
         self.root._openButton.config(height=1)
         self.root._openButton.pack(pady=10)
-        self.root.quitButton = tk.Button(text=_("Quit"), command=quit)
+        self.root.quitButton = tk.Button(text=_("Quit"), command=self.on_quit)
         self.root.quitButton.config(height=1, width=10)
         self.root.quitButton.pack(pady=10)
 

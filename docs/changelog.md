@@ -4,6 +4,12 @@
 
 ## Changelog
 
+### v0.6.7 Minor bugfix
+
+- Fix a bug where the configuration is not saved when the program is closed using the "Quit" button.
+
+Based on PyWriter v5.22.0
+
 ### v0.6.6 Update setup script
 
 - Change the working dir to the script dir on startup in order to avoid "file not found" error.
