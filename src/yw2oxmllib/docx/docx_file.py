@@ -204,7 +204,7 @@ class DocxFile(OxmlFile):
 
         #--- Generate word/styles.xml.
         #  Set system language set as default language.
-        lng, ctr = locale.getdefaultlocale()[0].split('_')
+        lng, ctr = locale.getlocale()[0].split('_')
         stylesMapping = dict(
             Language=lng,
             Country=ctr,

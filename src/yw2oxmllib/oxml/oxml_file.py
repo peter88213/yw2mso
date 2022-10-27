@@ -96,7 +96,7 @@ class OxmlFile(FileExport):
         #--- Generate docProps/core.xml.
 
         #  Set system language set as document language.
-        lng, ctr = locale.getdefaultlocale()[0].split('_')
+        lng, ctr = locale.getlocale()[0].split('_')
         coreMapping = dict(
             Author=self.authorName,
             Title=self.title,

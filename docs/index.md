@@ -15,7 +15,7 @@
 ## Requirements
 
 - Windows.
-- [Python 3.6+](https://www.python.org).  
+- [Python](https://www.python.org/) 3.6 =< version <= 3.10.
 
 *Please note:* If you use LibreOffice, you may prefer the [LibreOffice yWriter import extension](https://peter88213.github.io/yw-cnv) or the [yW2OO standalone converter](https://peter88213.github.io/yW2OO).
 
