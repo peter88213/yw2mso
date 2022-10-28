@@ -69,7 +69,7 @@ class NormalOperation(unittest.TestCase):
         self.exporter = Yw2msoExporter()
         self.exporter.ui = UiStub()
 
-    def test_yw7_to_nw(self):
+    def test_yw7_to_docx(self):
         copyfile(f'{TEST_DATA_PATH}{YW7_NORMAL}', f'{TEST_EXEC_PATH}{PROJECT}.yw7')
         os.chdir(TEST_EXEC_PATH)
         kwargs = {'suffix': ''}

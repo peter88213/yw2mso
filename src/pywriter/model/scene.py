@@ -5,24 +5,21 @@ For further information see https://github.com/peter88213/PyWriter
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import re
+from pywriter.model.basic_element import BasicElement
+from pywriter.pywriter_globals import *
 
 
-class Scene:
+class Scene(BasicElement):
     """yWriter scene representation.
     
     Public instance variables:
-        title -- str: scene title.
-        desc -- str: scene description in a single string.
         sceneContent -- str: scene content (property with getter and setter).
-        rtfFile -- str: RTF file name (yWriter 5).
         wordCount - int: word count (derived; updated by the sceneContent setter).
         letterCount - int: letter count (derived; updated by the sceneContent setter).
-        isUnused -- bool: True if the scene is marked "Unused". 
-        isNotesScene -- bool: True if the scene type is "Notes".
-        isTodoScene -- bool: True if the scene type is "Todo". 
+        scType -- int: Scene type (Normal/Notes/Todo/Unused).
         doNotExport -- bool: True if the scene is not to be exported to RTF.
         status -- int: scene status (Outline/Draft/1st Edit/2nd Edit/Done).
-        sceneNotes -- str: scene notes in a single string.
+        notes -- str: scene notes in a single string.
         tags -- list of scene tags. 
         field1 -- int: scene ratings field 1.
         field2 -- int: scene ratings field 2.
@@ -58,24 +55,16 @@ class Scene:
     NULL_TIME = '00:00:00'
 
     def __init__(self):
-        """Initialize instance variables."""
-        self.title = None
-        # str
-        # xml: <Title>
-
-        self.desc = None
-        # str
-        # xml: <Desc>
+        """Initialize instance variables.
+        
+        Extends the superclass constructor.
+        """
+        super().__init__()
 
         self._sceneContent = None
         # str
         # xml: <SceneContent>
         # Scene text with yW7 raw markup.
-
-        self.rtfFile = None
-        # str
-        # xml: <RTFFile>
-        # Name of the file containing the scene in yWriter 5.
 
         self.wordCount = 0
         # int # xml: <WordCount>
@@ -86,17 +75,31 @@ class Scene:
         # xml: <LetterCount>
         # To be updated by the sceneContent setter
 
-        self.isUnused = None
-        # bool
-        # xml: <Unused> -1
-
-        self.isNotesScene = None
-        # bool
-        # xml: <Fields><Field_SceneType> 1
-
-        self.isTodoScene = None
-        # bool
-        # xml: <Fields><Field_SceneType> 2
+        self.scType = None
+        # Scene type (Normal/Notes/Todo/Unused).
+        #
+        # xml: <Unused>
+        # xml: <Fields><Field_SceneType>
+        #
+        # This is how yWriter 7.1.3.0 reads the scene type:
+        #
+        # Type   |<Unused>|Field_SceneType>|scType
+        #--------+--------+----------------+------
+        # Notes  | x      | 1              | 1
+        # Todo   | x      | 2              | 2
+        # Unused | -1     | N/A            | 3
+        # Unused | -1     | 0              | 3
+        # Normal | N/A    | N/A            | 0
+        # Normal | N/A    | 0              | 0
+        #
+        # This is how yWriter 7.1.3.0 writes the scene type:
+        #
+        # Type   |<Unused>|Field_SceneType>|scType
+        #--------+--------+----------------+------
+        # Normal | N/A    | N/A            | 0
+        # Notes  | -1     | 1              | 1
+        # Todo   | -1     | 2              | 2
+        # Unused | -1     | 0              | 3
 
         self.doNotExport = None
         # bool
@@ -112,7 +115,7 @@ class Scene:
         # 5 - Done
         # See also the STATUS list for conversion.
 
-        self.sceneNotes = None
+        self.notes = None
         # str
         # xml: <Notes>
 
@@ -210,10 +213,6 @@ class Scene:
         # str
         # xml: <ImageFile>
 
-        self.kwVar = {}
-        # dictionary
-        # Optional key/value instance variables for customization.
-
     @property
     def sceneContent(self):
         return self._sceneContent
@@ -222,14 +221,9 @@ class Scene:
     def sceneContent(self, text):
         """Set sceneContent updating word count and letter count."""
         self._sceneContent = text
-        text = re.sub('--|—|–|…', ' ', text)
-        # Make dashes separate words
-        text = re.sub('\[.+?\]|\/\*.+?\*\/|\.|\,|-', '', text)
-        # Remove comments and yWriter raw markup for word count; make hyphens join words
+        text = ADDITIONAL_WORD_LIMITS.sub(' ', text)
+        text = NO_WORD_LIMITS.sub('', text)
         wordList = text.split()
         self.wordCount = len(wordList)
-        text = re.sub('\[.+?\]|\/\*.+?\*\/', '', self._sceneContent)
-        # Remove yWriter raw markup for letter count
-        text = text.replace('\n', '')
-        text = text.replace('\r', '')
+        text = NON_LETTERS.sub('', self._sceneContent)
         self.letterCount = len(text)

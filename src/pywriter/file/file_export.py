@@ -55,6 +55,9 @@ class FileExport(Novel):
     _itemSectionHeading = ''
     _itemTemplate = ''
     _fileFooter = ''
+    _projectNoteTemplate = ''
+
+    _DIVIDER = ', '
 
     def __init__(self, filePath, **kwargs):
         """Initialize filter strategy class instances.
@@ -143,6 +146,23 @@ class FileExport(Novel):
         if source.srtItems:
             self.srtItems = source.srtItems
             self.items = source.items
+
+        if source.srtPrjNotes:
+            self.srtPrjNotes = source.srtPrjNotes
+            self.projectNotes = source.projectNotes
+
+        if source.kwVar:
+            self.kwVar = source.kwVar
+
+        if source.languageCode is not None:
+            self.languageCode = source.languageCode
+
+        if source.countryCode is not None:
+            self.countryCode = source.countryCode
+
+        if source.languages is not None:
+            self.languages = source.languages
+
         return 'Export data updated from novel.'
 
     def _get_fileHeaderMapping(self):
@@ -200,7 +220,7 @@ class FileExport(Novel):
         if sceneNumber == 0:
             sceneNumber = ''
         if self.scenes[scId].tags is not None:
-            tags = self._get_string(self.scenes[scId].tags)
+            tags = list_to_string(self.scenes[scId].tags, divider=self._DIVIDER)
         else:
             tags = ''
 
@@ -209,9 +229,9 @@ class FileExport(Novel):
             # Note: Due to a bug, yWriter scenes might hold invalid
             # viepoint characters
             sChList = []
-            for chId in self.scenes[scId].characters:
-                sChList.append(self.characters[chId].title)
-            sceneChars = self._get_string(sChList)
+            for crId in self.scenes[scId].characters:
+                sChList.append(self.characters[crId].title)
+            sceneChars = list_to_string(sChList, divider=self._DIVIDER)
             viewpointChar = sChList[0]
         except:
             sceneChars = ''
@@ -222,7 +242,7 @@ class FileExport(Novel):
             sLcList = []
             for lcId in self.scenes[scId].locations:
                 sLcList.append(self.locations[lcId].title)
-            sceneLocs = self._get_string(sLcList)
+            sceneLocs = list_to_string(sLcList, divider=self._DIVIDER)
         else:
             sceneLocs = ''
 
@@ -231,7 +251,7 @@ class FileExport(Novel):
             sItList = []
             for itId in self.scenes[scId].items:
                 sItList.append(self.items[itId].title)
-            sceneItems = self._get_string(sItList)
+            sceneItems = list_to_string(sItList, divider=self._DIVIDER)
         else:
             sceneItems = ''
 
@@ -339,7 +359,7 @@ class FileExport(Novel):
             Viewpoint=viewpointChar,
             Locations=sceneLocs,
             Items=sceneItems,
-            Notes=self._convert_from_yw(self.scenes[scId].sceneNotes),
+            Notes=self._convert_from_yw(self.scenes[scId].notes),
             ProjectName=self._convert_from_yw(self.projectName, True),
             ProjectPath=self.projectPath,
         )
@@ -354,7 +374,7 @@ class FileExport(Novel):
         This is a template method that can be extended or overridden by subclasses.
         """
         if self.characters[crId].tags is not None:
-            tags = self._get_string(self.characters[crId].tags)
+            tags = list_to_string(self.characters[crId].tags, divider=self._DIVIDER)
         else:
             tags = ''
         if self.characters[crId].isMajor:
@@ -388,7 +408,7 @@ class FileExport(Novel):
         This is a template method that can be extended or overridden by subclasses.
         """
         if self.locations[lcId].tags is not None:
-            tags = self._get_string(self.locations[lcId].tags)
+            tags = list_to_string(self.locations[lcId].tags, divider=self._DIVIDER)
         else:
             tags = ''
 
@@ -413,7 +433,7 @@ class FileExport(Novel):
         This is a template method that can be extended or overridden by subclasses.
         """
         if self.items[itId].tags is not None:
-            tags = self._get_string(self.items[itId].tags)
+            tags = list_to_string(self.items[itId].tags, divider=self._DIVIDER)
         else:
             tags = ''
 
@@ -424,6 +444,23 @@ class FileExport(Novel):
             Tags=self._convert_from_yw(tags, True),
             Image=self.items[itId].image,
             AKA=self._convert_from_yw(self.items[itId].aka, True),
+            ProjectName=self._convert_from_yw(self.projectName, True),
+            ProjectPath=self.projectPath,
+        )
+        return itemMapping
+
+    def _get_prjNoteMapping(self, pnId):
+        """Return a mapping dictionary for a project note.
+        
+        Positional arguments:
+            pnId -- str: project note ID.
+        
+        This is a template method that can be extended or overridden by subclasses.
+        """
+        itemMapping = dict(
+            ID=pnId,
+            Title=self._convert_from_yw(self.projectNotes[pnId].title, True),
+            Desc=self._convert_from_yw(self.projectNotes[pnId].desc, True),
             ProjectName=self._convert_from_yw(self.projectName, True),
             ProjectPath=self.projectPath,
         )
@@ -478,29 +515,22 @@ class FileExport(Novel):
 
             # The order counts; be aware that "Todo" and "Notes" scenes are
             # always unused.
-            if self.scenes[scId].isTodoScene:
+            if self.scenes[scId].scType == 2:
                 if self._todoSceneTemplate:
                     template = Template(self._todoSceneTemplate)
                 else:
                     continue
 
-            elif self.scenes[scId].isNotesScene:
+            elif self.scenes[scId].scType == 1:
                 # Scene is "Notes" type.
                 if self._notesSceneTemplate:
                     template = Template(self._notesSceneTemplate)
                 else:
                     continue
 
-            elif self.scenes[scId].isUnused or self.chapters[chId].isUnused:
+            elif self.scenes[scId].scType == 3 or self.chapters[chId].chType == 3:
                 if self._unusedSceneTemplate:
                     template = Template(self._unusedSceneTemplate)
-                else:
-                    continue
-
-            elif self.chapters[chId].oldType == 1:
-                # Scene is "Info" type (old file format).
-                if self._notesSceneTemplate:
-                    template = Template(self._notesSceneTemplate)
                 else:
                     continue
 
@@ -567,7 +597,7 @@ class FileExport(Novel):
             if sceneCount > 0 and notExportCount == sceneCount:
                 doNotExport = True
             if self.chapters[chId].chType == 2:
-                # Chapter is "Todo" type (implies "unused").
+                # Chapter is "Todo" type.
                 if self.chapters[chId].chLevel == 1:
                     # Chapter is "Todo Part" type.
                     if self._todoPartTemplate:
@@ -575,21 +605,17 @@ class FileExport(Novel):
                 elif self._todoChapterTemplate:
                     template = Template(self._todoChapterTemplate)
             elif self.chapters[chId].chType == 1:
-                # Chapter is "Notes" type (implies "unused").
+                # Chapter is "Notes" type.
                 if self.chapters[chId].chLevel == 1:
                     # Chapter is "Notes Part" type.
                     if self._notesPartTemplate:
                         template = Template(self._notesPartTemplate)
                 elif self._notesChapterTemplate:
                     template = Template(self._notesChapterTemplate)
-            elif self.chapters[chId].isUnused:
-                # Chapter is "really" unused.
+            elif self.chapters[chId].chType == 3:
+                # Chapter is "unused" type.
                 if self._unusedChapterTemplate:
                     template = Template(self._unusedChapterTemplate)
-            elif self.chapters[chId].oldType == 1:
-                # Chapter is "Info" type (old file format).
-                if self._notesChapterTemplate:
-                    template = Template(self._notesChapterTemplate)
             elif doNotExport:
                 if self._notExportedChapterTemplate:
                     template = Template(self._notExportedChapterTemplate)
@@ -615,12 +641,9 @@ class FileExport(Novel):
             elif self.chapters[chId].chType == 1:
                 if self._notesChapterEndTemplate:
                     template = Template(self._notesChapterEndTemplate)
-            elif self.chapters[chId].isUnused:
+            elif self.chapters[chId].chType == 3:
                 if self._unusedChapterEndTemplate:
                     template = Template(self._unusedChapterEndTemplate)
-            elif self.chapters[chId].oldType == 1:
-                if self._notesChapterEndTemplate:
-                    template = Template(self._notesChapterEndTemplate)
             elif doNotExport:
                 if self._notExportedChapterEndTemplate:
                     template = Template(self._notExportedChapterEndTemplate)
@@ -687,6 +710,22 @@ class FileExport(Novel):
                 lines.append(template.safe_substitute(self._get_itemMapping(itId)))
         return lines
 
+    def _get_projectNotes(self):
+        """Process the project notes. 
+        
+        Iterate through the sorted project note list and apply the template, 
+        substituting placeholders according to the item mapping dictionary.
+        Skip items not accepted by the item filter.
+        Return a list of strings.
+        This is a template method that can be extended or overridden by subclasses.
+        """
+        lines = []
+        template = Template(self._projectNoteTemplate)
+        for pnId in self.srtPrjNotes:
+            map = self._get_prjNoteMapping(pnId)
+            lines.append(template.safe_substitute(map))
+        return lines
+
     def _get_text(self):
         """Call all processing methods.
         
@@ -698,6 +737,7 @@ class FileExport(Novel):
         lines.extend(self._get_characters())
         lines.extend(self._get_locations())
         lines.extend(self._get_items())
+        lines.extend(self._get_projectNotes())
         lines.append(self._fileFooter)
         return ''.join(lines)
 
@@ -725,17 +765,6 @@ class FileExport(Novel):
             return f'{ERROR}{_("Cannot write file")}: "{os.path.normpath(self.filePath)}".'
 
         return f'{_("File written")}: "{os.path.normpath(self.filePath)}".'
-
-    def _get_string(self, elements):
-        """Join strings from a list.
-        
-        Return a string which is the concatenation of the 
-        members of the list of strings "elements", separated by 
-        a comma plus a space. The space allows word wrap in 
-        spreadsheet cells.
-        """
-        text = (', ').join(elements)
-        return text
 
     def _convert_from_yw(self, text, quick=False):
         """Return text, converted from yw7 markup to target format.

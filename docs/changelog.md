@@ -4,6 +4,12 @@
 
 ## Changelog
 
+### v0.6.8
+
+- Update the PyWriter library for future Python versions.
+
+Based on PyWriter v7.14.2
+
 ### v0.6.7 Minor bugfix
 
 - Fix a bug where the configuration is not saved when the program is closed using the "Quit" button.

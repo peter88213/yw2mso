@@ -18,6 +18,8 @@ TARGET_FILE = f'{BUILD}yw2oxml.pyw'
 
 
 def main():
+    # inliner.run(SOURCE_FILE, TARGET_FILE, 'yw2oxmllib', '../src/', copyPyWriter=True)
+    # inliner.run(TARGET_FILE, TARGET_FILE, 'pywriter', '../../PyWriter/src/', copyPyWriter=True)
     inliner.run(SOURCE_FILE, TARGET_FILE, 'yw2oxmllib', '../src/')
     inliner.run(TARGET_FILE, TARGET_FILE, 'pywriter', '../src/')
     print('Done.')
