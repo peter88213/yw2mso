@@ -4,6 +4,12 @@
 
 ## Changelog
 
+### v0.6.9
+
+- Make the setup script run with Python 3.11.
+
+Based on PyWriter v7.14.2
+
 ### v0.6.8
 
 - Update the PyWriter library for future Python versions.

