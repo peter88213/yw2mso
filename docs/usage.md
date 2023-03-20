@@ -38,7 +38,7 @@ You can either
 
 #### Open a yWriter project
 
-- If no yWriter project is specified by dragging and dropping on the program icon, the latest project selected is preset. You can change it with **File > Open** or **Ctrl-o**.
+- If no yWriter project is specified by dragging and dropping on the program icon, the latest project selected is preset. You can change it with **File > Open** or **Ctrl-O**.
 
 #### Close the ywriter project
 
@@ -47,7 +47,7 @@ You can either
 
 #### Exit 
 
-- You can exit with **File > Exit** of **Ctrl-q**.
+- You can exit with **File > Exit** of **Ctrl-Q**.
 
 
 # Command reference
@@ -154,8 +154,7 @@ be edited and written back to yWriter format. File name suffix is
 ## Character descriptions
 
 This will generate a new Open XML text document (docx) containing
-character descriptions, bio, goals, and notes that can be edited in Office
-Writer and written back to yWriter format. File name suffix is
+character descriptions, bio, goals, and notes. File name suffix is
 `_characters`.
 
 
@@ -167,8 +166,7 @@ Writer and written back to yWriter format. File name suffix is
 ## Location descriptions
 
 This will generate a new Open XML text document (docx) containing
-location descriptions that can be edited in Office Writer and written
-back to yWriter format. File name suffix is `_locations`.
+location descriptions. File name suffix is `_locations`.
 
 
 
@@ -179,8 +177,7 @@ back to yWriter format. File name suffix is `_locations`.
 ## Item descriptions
 
 This will generate a new Open XML text document (docx) containing
-item descriptions that can be edited in Office Writer and written back
-to yWriter format. File name suffix is `_items`.
+item descriptions. File name suffix is `_items`.
 
 
 
