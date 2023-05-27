@@ -13,6 +13,8 @@ import zipfile
 
 from yw2oxmllib.yw2oxml_exporter import Yw2msoExporter
 
+UPDATE = False
+
 # Test environment
 
 # The paths are relative to the "test" directory,
@@ -76,6 +78,8 @@ class NormalOperation(unittest.TestCase):
         self.exporter.run(f'{TEST_EXEC_PATH}{PROJECT}.yw7', **kwargs)
         with zipfile.ZipFile(f'{TEST_EXEC_PATH}{PROJECT}.docx', 'r') as myzip:
             myzip.extract(f'word/{DOCUMENT}', TEST_EXEC_PATH)
+        if UPDATE:
+            copyfile(f'word/{DOCUMENT}', f'{TEST_DATA_PATH}{DOCUMENT_NORMAL_EXPORT}')
         self.assertEqual(read_file(f'word/{DOCUMENT}'), read_file(f'{TEST_DATA_PATH}{DOCUMENT_NORMAL_EXPORT}'))
 
     def tearDown(self):

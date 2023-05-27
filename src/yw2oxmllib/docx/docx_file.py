@@ -101,9 +101,9 @@ class DocxFile(OxmlFile):
 <w:style w:type="character" w:styleId="Emphasis"><w:name w:val="Emphasis"/><w:qFormat/><w:rPr><w:i/><w:shd w:fill="auto" w:val="clear"/></w:rPr></w:style>
 <w:style w:type="character" w:styleId="Strongemphasis"><w:name w:val="Strong Emphasis"/><w:qFormat/><w:rPr><w:caps/></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Heading"><w:name w:val="Heading"/><w:basedOn w:val="Normal"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:keepNext w:val="true"/><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs><w:spacing w:lineRule="exact" w:line="414"/><w:jc w:val="center"/></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="BodyText"><w:name w:val="Body Text"/><w:basedOn w:val="Normal"/><w:next w:val="BodyTextIndent"/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="FirstLineIndent"><w:name w:val="Body Text Indent Indent"/><w:basedOn w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="0" w:right="0" w:firstLine="283"/></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="BodyTextIndent"><w:name w:val="First Line Indent"/><w:basedOn w:val="BodyText"/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="283" w:right="0" w:hanging="0"/></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="BodyText"><w:name w:val="Body Text"/><w:basedOn w:val="Normal"/><w:next w:val="BodyTextFirstIndent"/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="BodyTextFirstIndent"><w:name w:val="Body Text First Indent"/><w:basedOn w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="0" w:right="0" w:firstLine="283"/></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="BodyTextIndent"><w:name w:val="Body Text Indent"/><w:basedOn w:val="BodyText"/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="283" w:right="0" w:hanging="0"/></w:pPr><w:rPr></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Heading10"><w:name w:val="Heading 10"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:outlineLvl w:val="8"/></w:pPr><w:rPr><w:b/><w:sz w:val="18"/></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Footer"><w:name w:val="Footer"/><w:basedOn w:val="Normal"/><w:pPr><w:suppressLineNumbers/><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs><w:jc w:val="center"/></w:pPr><w:rPr><w:sz w:val="22"/></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Subtitle"/><w:qFormat/><w:pPr><w:suppressLineNumbers/><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs><w:spacing w:lineRule="auto" w:line="480" w:before="0" w:after="0"/><w:ind w:left="0" w:right="0" w:hanging="0"/><w:jc w:val="center"/></w:pPr><w:rPr><w:b w:val="false"/><w:caps/><w:kern w:val="0"/></w:rPr></w:style>
@@ -306,7 +306,7 @@ class DocxFile(OxmlFile):
                 ('>', '&gt;'),
                 ('<', '&lt;'),
                 ('\n\n', (2 * '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyText"/></w:pPr><w:r><w:t xml:space="preserve">')),
-                ('\n', '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="FirstLineIndent"/></w:pPr><w:r><w:t xml:space="preserve">'),
+                ('\n', '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyTextFirstIndent"/></w:pPr><w:r><w:t xml:space="preserve">'),
                 ('\r', '\n'),
                 ('[i]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Emphasis"/></w:rPr><w:t xml:space="preserve">'),
                 ('[/i]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),

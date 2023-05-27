@@ -4,6 +4,12 @@
 
 ## Changelog
 
+### v0.6.11
+
+- Fix paragraph style names.
+
+Based on PyWriter v7.14.3
+
 ### v0.6.10
 
 - Make it run with old Windows versions.

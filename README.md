@@ -37,8 +37,8 @@ Exceptions:
 
 ### Development tools
 
-- [Python](https://python.org) version 3.9
-- [Eclipse IDE](https://eclipse.org) with [PyDev](https://pydev.org) and [EGit](https://www.eclipse.org/egit/)
+- [Python](https://python.org) version 3.10
+- [Eclipse IDE](https://eclipse.org) with *PyDev* and *EGit*.
 - Apache Ant for building the application script
 
 ## License
