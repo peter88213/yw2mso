@@ -24,37 +24,37 @@ class XlsxCharList(XlsxFile):
     <table:table-column table:style-name="co4" table:default-cell-style-name="Default"/>
     <table:table-column table:style-name="co1" table:number-columns-repeated="1014" table:default-cell-style-name="Default"/>
      <table:table-row table:style-name="ro1">
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>ID</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Name</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Full name</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Aka</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Description</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Bio</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Goals</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Importance</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Tags</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Notes</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" table:number-columns-repeated="1014"/>
+     <table:table-cell table:style-name="heading" table:number-columns-repeated="1014"/>
     </table:table-row>
 
 '''

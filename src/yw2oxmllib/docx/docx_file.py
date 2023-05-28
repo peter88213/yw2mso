@@ -89,22 +89,20 @@ class DocxFile(OxmlFile):
 <w:lang w:val="$Language-$Country" w:eastAsia="zxx" w:bidi="zxx"/>
 </w:rPr>
 </w:style>
-<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="Heading 1"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="828" w:after="414"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:caps/></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="Heading 2"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="828" w:after="414"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="Heading 3"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="414" w:after="414"/><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:i/></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading4"><w:name w:val="Heading 4"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="414" w:after="414"/></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading5"><w:name w:val="Heading 5"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading6"><w:name w:val="Heading 6"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading7"><w:name w:val="Heading 7"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading8"><w:name w:val="Heading 8"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading9"><w:name w:val="Heading 9"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="character" w:styleId="Emphasis"><w:name w:val="Emphasis"/><w:qFormat/><w:rPr><w:i/><w:shd w:fill="auto" w:val="clear"/></w:rPr></w:style>
-<w:style w:type="character" w:styleId="Strongemphasis"><w:name w:val="Strong Emphasis"/><w:qFormat/><w:rPr><w:caps/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="828" w:after="414"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:caps/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="828" w:after="414"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading3"><w:name w:val="heading 3"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="414" w:after="414"/><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:i/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading4"><w:name w:val="heading 4"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="414" w:after="414"/></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading5"><w:name w:val="heading 5"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading6"><w:name w:val="heading 6"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading7"><w:name w:val="heading 7"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading8"><w:name w:val="heading 8"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading9"><w:name w:val="heading 9"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr></w:pPr><w:rPr></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Heading"><w:name w:val="Heading"/><w:basedOn w:val="Normal"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:keepNext w:val="true"/><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs><w:spacing w:lineRule="exact" w:line="414"/><w:jc w:val="center"/></w:pPr><w:rPr></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="BodyText"><w:name w:val="Body Text"/><w:basedOn w:val="Normal"/><w:next w:val="BodyTextFirstIndent"/><w:pPr><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs></w:pPr><w:rPr></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="BodyTextFirstIndent"><w:name w:val="Body Text First Indent"/><w:basedOn w:val="BodyText"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="0" w:right="0" w:firstLine="283"/></w:pPr><w:rPr></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="BodyTextIndent"><w:name w:val="Body Text Indent"/><w:basedOn w:val="BodyText"/><w:pPr><w:spacing w:before="0" w:after="0"/><w:ind w:left="283" w:right="0" w:hanging="0"/></w:pPr><w:rPr></w:rPr></w:style>
-<w:style w:type="paragraph" w:styleId="Heading10"><w:name w:val="Heading 10"/><w:basedOn w:val="Heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:outlineLvl w:val="8"/></w:pPr><w:rPr><w:b/><w:sz w:val="18"/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="heading10"><w:name w:val="heading 10"/><w:basedOn w:val="heading"/><w:next w:val="BodyText"/><w:qFormat/><w:pPr><w:outlineLvl w:val="8"/></w:pPr><w:rPr><w:b/><w:sz w:val="18"/></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Footer"><w:name w:val="Footer"/><w:basedOn w:val="Normal"/><w:pPr><w:suppressLineNumbers/><w:tabs><w:tab w:val="clear" w:pos="709"/><w:tab w:val="center" w:pos="4819" w:leader="none"/><w:tab w:val="right" w:pos="9639" w:leader="none"/></w:tabs><w:jc w:val="center"/></w:pPr><w:rPr><w:sz w:val="22"/></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Subtitle"/><w:qFormat/><w:pPr><w:suppressLineNumbers/><w:tabs><w:tab w:val="clear" w:pos="709"/></w:tabs><w:spacing w:lineRule="auto" w:line="480" w:before="0" w:after="0"/><w:ind w:left="0" w:right="0" w:hanging="0"/><w:jc w:val="center"/></w:pPr><w:rPr><w:b w:val="false"/><w:caps/><w:kern w:val="0"/></w:rPr></w:style>
 <w:style w:type="paragraph" w:styleId="Subtitle"><w:name w:val="Subtitle"/><w:basedOn w:val="Title"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0"/></w:pPr><w:rPr><w:b w:val="false"/><w:i/><w:caps w:val="false"/><w:smallCaps w:val="false"/><w:spacing w:val="0"/></w:rPr></w:style>
@@ -308,9 +306,9 @@ class DocxFile(OxmlFile):
                 ('\n\n', (2 * '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyText"/></w:pPr><w:r><w:t xml:space="preserve">')),
                 ('\n', '</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="BodyTextFirstIndent"/></w:pPr><w:r><w:t xml:space="preserve">'),
                 ('\r', '\n'),
-                ('[i]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Emphasis"/></w:rPr><w:t xml:space="preserve">'),
+                ('[i]', '</w:t></w:r><w:r><w:rPr><w:i/></w:rPr><w:t xml:space="preserve">'),
                 ('[/i]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
-                ('[b]', '</w:t></w:r><w:r><w:rPr><w:rStyle w:val="Strongemphasis"/></w:rPr><w:t xml:space="preserve">'),
+                ('[b]', '</w:t></w:r><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">'),
                 ('[/b]', '</w:t></w:r><w:r><w:t xml:space="preserve">'),
             ]
             for yw, oxml in DOCX_REPLACEMENTS:

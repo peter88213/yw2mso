@@ -19,14 +19,14 @@ class DocxCharacters(DocxFile):
 <w:p><w:pPr><w:pStyle w:val="Subtitle"/></w:pPr><w:r><w:t>$AuthorName</w:t></w:r></w:p>
 '''
 
-    _characterTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>$Title$FullName$AKA</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Description</w:t></w:r></w:p>
+    _characterTemplate = '''<w:p><w:pPr><w:pStyle w:val="heading2"/></w:pPr><w:r><w:t>$Title$FullName$AKA</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="heading3"/></w:pPr><w:r><w:t>Description</w:t></w:r></w:p>
 <w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Desc</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Bio</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="heading3"/></w:pPr><w:r><w:t>Bio</w:t></w:r></w:p>
 <w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Bio</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Goals</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="heading3"/></w:pPr><w:r><w:t>Goals</w:t></w:r></w:p>
 <w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Goals</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:t>Notes</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="heading3"/></w:pPr><w:r><w:t>Notes</w:t></w:r></w:p>
 <w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Notes</w:t></w:r></w:p>
 '''
 

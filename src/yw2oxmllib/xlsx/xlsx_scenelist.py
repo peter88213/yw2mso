@@ -66,70 +66,70 @@ class XlsxSceneList(XlsxFile):
     <table:table-column table:style-name="co3" table:default-cell-style-name="Default"/>
     <table:table-column table:style-name="co3" table:default-cell-style-name="Default"/>
     <table:table-row table:style-name="ro1">
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Scene link</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Scene title</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Scene description</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Tags</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Scene notes</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>A/R</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Goal</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Conflict</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Outcome</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Scene</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Words total</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>$FieldTitle1</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>$FieldTitle2</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>$FieldTitle3</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>$FieldTitle4</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Word count</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Letter count</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Status</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Characters</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Locations</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" office:value-type="string">
+     <table:table-cell table:style-name="heading" office:value-type="string">
       <text:p>Items</text:p>
      </table:table-cell>
-     <table:table-cell table:style-name="Heading" table:number-columns-repeated="1003"/>
+     <table:table-cell table:style-name="heading" table:number-columns-repeated="1003"/>
     </table:table-row>
 
 '''

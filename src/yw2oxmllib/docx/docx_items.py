@@ -19,7 +19,7 @@ class DocxItems(DocxFile):
 <w:p><w:pPr><w:pStyle w:val="Subtitle"/></w:pPr><w:r><w:t>$AuthorName</w:t></w:r></w:p>
 '''
 
-    _itemTemplate = '''<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>$Title$AKA</w:t></w:r></w:p>
+    _itemTemplate = '''<w:p><w:pPr><w:pStyle w:val="heading2"/></w:pPr><w:r><w:t>$Title$AKA</w:t></w:r></w:p>
 <w:p><w:pPr><w:pStyle w:val="BodyText"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>$Desc</w:t></w:r></w:p>'''
 
     _fileFooter = DocxFile._DOCUMENT_XML_FOOTER

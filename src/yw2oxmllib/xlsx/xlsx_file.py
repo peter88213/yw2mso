@@ -202,12 +202,12 @@ class XlsxFile(OxmlFile):
    <style:text-properties fo:font-style="italic" style:text-underline-style="solid" style:text-underline-width="auto" style:text-underline-color="font-color" fo:font-weight="bold"/>
   </style:style>
   <style:style style:name="Result2" style:family="table-cell" style:parent-style-name="Result"/>
-  <style:style style:name="Heading" style:family="table-cell" style:parent-style-name="Default">
+  <style:style style:name="heading" style:family="table-cell" style:parent-style-name="Default">
    <style:table-cell-properties fo:background-color="#cfe7f5" style:text-align-source="fix" style:repeat-content="false"/>
    <style:paragraph-properties fo:text-align="start"/>
    <style:text-properties fo:font-weight="bold"/>
   </style:style>
-  <style:style style:name="Heading1" style:family="table-cell" style:parent-style-name="Heading">
+  <style:style style:name="heading1" style:family="table-cell" style:parent-style-name="heading">
    <style:table-cell-properties style:rotation-angle="90"/>
   </style:style>
  </office:styles>

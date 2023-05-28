@@ -4,6 +4,13 @@
 
 ## Changelog
 
+### v1.0.0
+
+- Apply bold and italics instead of character styles.
+- Change heading style names.
+
+Based on PyWriter v7.14.3
+
 ### v0.6.11
 
 - Fix paragraph style names.
