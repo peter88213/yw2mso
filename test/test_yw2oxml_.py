@@ -1,4 +1,4 @@
-""" Python unit tests for the yw2oxml project.
+""" Regression test for the yw2oxml project.
 
 Test suite for yw2oxml.py.
 
