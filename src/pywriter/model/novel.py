@@ -201,6 +201,7 @@ class Novel(BasicElement):
         - Format the path string according to Python's requirements. 
         - Accept only filenames with the right suffix and extension.
         """
+        filePath = filePath.replace('\\', '/')
         if self.SUFFIX is not None:
             suffix = self.SUFFIX
         else:

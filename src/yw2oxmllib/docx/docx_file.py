@@ -269,7 +269,7 @@ class DocxFile(OxmlFile):
             text = self._remove_inline_code(text)
 
             # Remove comments.
-            text = re.sub('\/\*.+?\*\/', '', text)
+            text = re.sub(r'\/\*.+?\*\/', '', text)
 
             # process italics and bold markup reaching across linebreaks
             italics = False
@@ -316,7 +316,7 @@ class DocxFile(OxmlFile):
 
             # Remove highlighting, alignment,
             # strikethrough, and underline tags.
-            text = re.sub('\[\/*[h|c|r|s|u]\d*\]', '', text)
+            text = re.sub(r'\[\/*[h|c|r|s|u]\d*\]', '', text)
         else:
             text = ''
         return text
